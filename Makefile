@@ -28,7 +28,8 @@ $(FASLS): build/%.fasl: src/%.cl | build
 	sbcl \
 		$(GLOBAL_FLAGS) \
 		$(NON_INTERACTIVE_FLAGS) \
-		--eval '(multiple-value-bind (path warnp failp) (compile-file "$^" :output-file "../$@") (declare (ignore path)) (if (or warnp failp) (error "Compilation failure.")))'
+		--eval '(multiple-value-bind (path warnp failp) (compile-file "$^" :output-file "../$@") (declare (ignore path)) (if (or warnp failp) (error "Compilation failure.")))' \
+	|| { rm -f $@; exit 1; }
 
 build:
 	mkdir -p $@
