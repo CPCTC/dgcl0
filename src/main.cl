@@ -10,7 +10,7 @@
 
   (let (vehicles)
     (dolist (file (cdr *posix-argv*))
-      (push (make-vehicle file) vehicles))
+      (push (make-instance 'vehicle :file file) vehicles))
 
     (do nil ((= 1 (count-if #'active-p vehicles)))
       (query vehicles)
