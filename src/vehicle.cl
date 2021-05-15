@@ -1,3 +1,5 @@
+(load (make-pathname :directory '(:relative "src") :name "const" :type "cl"))
+
 ;;; Vehicles have the following stuff in em.
 ;;;         - user vehicle: single form read from file.
 ;;;         - grid: hash table of coordinates -> directions and a character

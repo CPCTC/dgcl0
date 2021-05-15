@@ -1,3 +1,5 @@
+(load (make-pathname :directory '(:relative "src") :name "vehicle" :type "cl"))
+
 (defun main ()
   "- For each vehicle, create a vehicle structure with:
           - The read user vehicle.
