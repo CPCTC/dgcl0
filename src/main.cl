@@ -15,7 +15,8 @@
     (dolist (file (cdr *posix-argv*))
       (push (make-instance 'vehicle :file file) vehicles))
 
-    (do nil ((= 1 (count-if #'active-p vehicles)))
+    (do nil ((= 1 (length vehicles)))
       (query vehicles)
       (run vehicles)
-      (draw vehicles))))
+      (draw vehicles)
+      (read-char)))
