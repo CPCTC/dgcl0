@@ -7,7 +7,9 @@
 
 (defclass vehicle nil
   (user-vehicle
-   grid             ; name is misleading, should be called `data`
+   (pos
+     :initform '(0 0))
+   grid
    (actions
      :initform nil)))
 
