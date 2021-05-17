@@ -3,15 +3,12 @@
 ;;; Vehicles have the following stuff in em.
 ;;;         - user vehicle: single form read from file.
 ;;;         - grid: hash table of coordinates -> directions and a character
-;;;         - actions: list of pending actions
 
 (defclass vehicle nil
   (user-vehicle
    (pos
      :initform '(0 0))
-   grid
-   (actions
-     :initform nil)))
+   grid))
 
 (defun make-grid (user-vehicle &optional (reverse-directions nil) (grid (make-hash-table)))
   (cond
