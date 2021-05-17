@@ -8,6 +8,6 @@
   (let (actions)
     (dolist (v vehicles)
       (dolist (a (slot-value v 'actions))
-        (push a actions)))
+        (push '(,a ,v) actions)))
     (dolist (a actions)
-      (funcall a vehicles))))
+      (apply (first a) `(,(second a) ,vehicles))))))
