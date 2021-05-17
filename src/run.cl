@@ -1,0 +1,7 @@
+(defun run (vehicles)
+  (let (actions)
+    (dolist (v vehicles)
+      (dolist (a (slot-value v 'actions))
+        (push a actions)))
+    (dolist (a actions)
+      (funcall a vehicles))))

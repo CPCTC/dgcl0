@@ -1,5 +1,6 @@
 (load (make-pathname :directory '(:relative "src") :name "vehicle" :type "cl"))
 (load (make-pathname :directory '(:relative "src") :name "draw" :type "cl"))
+(load (make-pathname :directory '(:relative "src") :name "run" :type "cl"))
 
 (defun main ()
   "- For each vehicle, create a vehicle structure with:
