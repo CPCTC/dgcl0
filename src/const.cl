@@ -11,3 +11,5 @@
    Can be treated as a injective function.
    Input: A drcall function, or nil for 'unknown'.
    Output: The drcall's coresponding character.")
+
+(defconstant bullet-char #\*)
