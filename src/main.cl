@@ -17,7 +17,7 @@
       (push (make-instance 'vehicle :file file) vehicles))
 
     (do nil ((= 1 (length vehicles)))
-      (query vehicles)
+      (collect vehicles)
       (run vehicles)
       (draw vehicles)
       (read-char)))

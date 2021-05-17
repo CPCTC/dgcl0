@@ -1,3 +1,9 @@
+;;; Run every vehicle, collecting
+;;; a list of actions in each.
+(defun collect (vehicles)
+  ; ...)
+
+;;; Execute all actions from all vehicles.
 (defun run (vehicles)
   (let (actions)
     (dolist (v vehicles)
