@@ -1,3 +1,5 @@
+(provide 'driver)
+
 (defpackage driver
   (:documentation "Public interface for calls to the dgcl0 driver from loaded vehicles.")
   (:export

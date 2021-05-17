@@ -1,4 +1,6 @@
-(load (make-pathname :directory '(:relative "src") :name "const" :type "cl"))
+(provide 'draw)
+
+(require 'const (make-pathname :directory '(:relative "src") :name "const" :type "cl"))
 
 (defun find-field-size (vehicles bullets)
   (let*
