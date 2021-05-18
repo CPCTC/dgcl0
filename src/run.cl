@@ -16,7 +16,7 @@
     (declare (special *driver-directions*))
     (handler-case (funcall (first (slot-value *this-vehicle* 'user-vehicle)))
       (condition nil
-        (setf *other-vehicles* (delete *this-vehicle* *other-vehicles*))))))
+        (remove *this-vehicle* *other-vehicles*)))))
 
 (defun run (vehicles bullets)
   (step-bullets bullets vehicles)
