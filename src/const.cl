@@ -15,3 +15,4 @@
    Output: The drcall's coresponding character.")
 
 (defconstant bullet-char #\*)
+(defconstant max-bullet-lifetime 50)
