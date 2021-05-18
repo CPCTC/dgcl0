@@ -1,12 +1,14 @@
 (provide 'run)
 
+(require 'const (make-pathname :directory '(:relative "src") :name "const" :type "cl"))
+
 ;; bullets: '(pos vel count)
 (defun step-bullets (bullets vehicles)
   (dolist (b bullets)
     (destroy-location (first b) vehicles)
     (setf (first b) (mapcar #'+ (first b) (second b)))
     (incf (third b))
-    (if (> (third b) *max-bullet-lifetime*)
+    (if (> (third b) max-bullet-lifetime)
       (remove b bullets)
       (destroy-location (first b) vehicles))))
 
