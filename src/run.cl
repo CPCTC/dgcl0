@@ -1,5 +1,6 @@
 (provide 'run)
 
+(require 'driver (make-pathname :directory '(:relative "src") :name "driver" :type "cl"))
 (require 'const (make-pathname :directory '(:relative "src") :name "const" :type "cl"))
 
 ;; bullets: '(pos vel count)
