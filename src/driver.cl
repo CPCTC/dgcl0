@@ -14,3 +14,12 @@
     release     ;; Split off a child.
     explode     ;; Destroy the area around the caller.
     ))
+
+(defun destroy-location (coords vehicles)
+  (dolist (v vehicles)
+    (maphash
+      (lambda (key value)
+        (when (equal key coords)
+          (destroy-node v (first value) vehicles)
+          (return-from destroy-location)))
+      (slot-value v 'grid))))
