@@ -10,4 +10,4 @@
     re-top      ;; Set the calling-node as the new top level for your entire vehicle.
     re-parent   ;; Pick a new parent for this node.
     translate   ;; Shift your vehicle in one of the four cardinal directions.
-    children))    ;; Check which children are still attached.
+    children))  ;; Check which children are still attached.
