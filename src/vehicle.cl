@@ -35,3 +35,8 @@
     (setf (slot-value v 'user-vehicle) user-vehicle)
     (setf (slot-value v 'grid)
       (make-grid user-vehicle))))
+
+(defun node (user-vehicle directions)
+  (if directions
+    (node (elt user-vehicle (1+ (car directions))) (cdr directions))
+    user-vehicle))
