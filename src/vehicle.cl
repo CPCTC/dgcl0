@@ -12,7 +12,7 @@
      :initform '(0 0))
    grid))
 
-(defun make-grid (user-vehicle &optional (reverse-directions nil) (grid (make-hash-table)))
+(defun make-grid (user-vehicle &optional (reverse-directions nil) (grid (make-hash-table :test #'equal)))
   (cond
     (user-vehicle
       (let ((coords '(0 0)))
