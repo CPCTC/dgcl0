@@ -3,9 +3,9 @@
     (top
       (lambda ()
         (let ((sensor-results (driver:call 2 nil)))     ;; Call the sensor and get it's results
-          (if sensor-results)
+          (if sensor-results
             (driver:call 1 nil))
-          nil))
+          nil)))
     (sensor
       (lambda ()
         (driver:sense -1 0)))
