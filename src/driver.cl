@@ -1,5 +1,8 @@
 (provide 'driver)
 
+(require 'const (make-pathname :directory '(:relative "src") :name "const" :type "cl"))
+(require 'vehicle (make-pathname :directory '(:relative "src") :name "vehicle" :type "cl"))
+
 (defpackage driver
   (:documentation "Public interface for calls to the dgcl0 driver from loaded vehicles.")
   (:export
@@ -14,6 +17,21 @@
     release     ;; Split off a child.
     explode     ;; Destroy the area around the caller.
     ))
+
+(defun destroy-node (vehicle directions vehicles)
+  (dotimes (i 4)
+    ;; As children are released, thier grid entries
+    ;; in the parent vehicle are removed and transferred
+    ;; to the new vehicle.
+    (release-child vehicle directions i vehicles))
+  (remhash (dir->coords directions) (slot-value vehicle 'grid))
+  (setf
+    (elt
+      (node
+        (slot-value vehicle 'user-vehicle)
+        (reverse (cdr (reverse directions))))
+      (1+ (car (last directions))))
+    nil))
 
 (defun destroy-location (coords vehicles)
   (dolist (v vehicles)
