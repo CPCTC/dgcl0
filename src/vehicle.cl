@@ -6,11 +6,14 @@
 ;;;         - user vehicle: single form read from file.
 ;;;         - grid: hash table of coordinates -> directions and a character
 
-(defclass vehicle nil
-  (user-vehicle
-   (pos
-     :initform '(0 0))
-   grid))
+(defun user-vehicle (vehicle)
+  (first vehicle))
+
+(defun pos (vehicle)
+  (second vehicle))
+
+(defun grid (vehicle)
+  (third vehicle))
 
 (defun make-grid (user-vehicle &optional (reverse-directions nil) (grid (make-hash-table :test #'equal)))
   (cond
