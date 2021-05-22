@@ -28,16 +28,12 @@
     (T
       nil)))
 
-(defmethod initialize-instance :after ((v vehicle) &key file)
-  (if (not file)
-    (error "Must specify :file."))
+(defun make-vehicle-file (file)
   (let (
         (user-vehicle
           (with-open-file (in file)
             (eval (read in)))))
-    (setf (slot-value v 'user-vehicle) user-vehicle)
-    (setf (slot-value v 'grid)
-      (make-grid user-vehicle))))
+    `(,user-vehicle (0 0) ,(make-grid user-vehicle))))
 
 (defun node (user-vehicle directions)
   (if directions
