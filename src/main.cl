@@ -12,7 +12,7 @@
 
   (let (vehicles)
     (dolist (file (cdr *posix-argv*))
-      (push (make-instance 'vehicle :file file) vehicles))
+      (push (make-vehicle-file file) vehicles))
 
     (let (bullets)
       (do nil ((= 1 (length vehicles)))
