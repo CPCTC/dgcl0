@@ -10,8 +10,8 @@
            (maphash
              (lambda (k val)
                (declare (ignore val))
-               (push (mapcar #'+ k (slot-value v 'pos)) ac))
-             (slot-value v 'grid)))
+               (push (mapcar #'+ k (pos v)) ac))
+             (grid v)))
          (nconc ac (mapcar #'first bullets))))
      (min-coord
        `(
@@ -36,9 +36,9 @@
       (dolist (vehicle vehicles)
         (maphash
           (lambda (k v)
-            (let ((absolute-pos (mapcar #'+ origin (slot-value vehicle 'pos) k)))
+            (let ((absolute-pos (mapcar #'+ origin (pos vehicle) k)))
               (plot field (second field-size) absolute-pos (second v))))
-          (slot-value vehicle 'grid)))
+          (grid vehicle)))
       (dolist (b bullets)
         (plot field (second field-size) (mapcar #'+ origin (first b)) bullet-char))
       (let ((counter 0))

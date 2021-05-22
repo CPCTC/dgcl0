@@ -24,11 +24,11 @@
     ;; in the parent vehicle are removed and transferred
     ;; to the new vehicle.
     (release-child vehicle directions i vehicles))
-  (remhash (dir->coords directions) (slot-value vehicle 'grid))
+  (remhash (dir->coords directions) (grid vehicle))
   (setf
     (elt
       (node
-        (slot-value vehicle 'user-vehicle)
+        (user-vehicle vehicle)
         (reverse (cdr (reverse directions))))
       (1+ (car (last directions))))
     nil))
@@ -40,4 +40,4 @@
         (when (equal key coords)
           (destroy-node v (first value) vehicles)
           (return-from destroy-location)))
-      (slot-value v 'grid))))
+      (grid v))))
