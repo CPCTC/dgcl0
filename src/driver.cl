@@ -18,6 +18,37 @@
     explode     ;; Destroy the area around the caller.
     ))
 
+(defun release-child (vehicle directions child vehicles)
+  (let* (
+         (child-directions
+           (append directions (list child)))
+         (child-uv
+           (node
+             (user-vehicle vehicle)
+             child-directions))
+         (child-pos       ;; on global grid
+           (mapcar #'+
+             (pos vehicle)
+             (dir->coords child-directions)))
+         (child-grid
+           (make-grid child-uv)))
+    (setf
+      (child
+        (node
+          (user-vehicle vehicle)
+          directions)
+        child)
+      nil)
+    (maphash
+      (lambda (k v)
+        (let ((child-grid-key
+                (mapcar #'- k (dir->coords child-directions))))
+          (when (gethash child-grid-key child-grid)
+            (remhash k (grid vehicle))
+            (setf (second (gethash child-grid-key child-grid)) (second v)))))
+      (grid vehicle))
+    (push (new-vehicle child-uv child-pos child-grid) vehicles)))
+
 (defun destroy-node (vehicle directions vehicles)
   (dotimes (i 4)
     ;; As children are released, thier grid entries
