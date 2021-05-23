@@ -6,6 +6,9 @@
 ;;;         - user vehicle: single form read from file.
 ;;;         - grid: hash table of coordinates -> directions and a character
 
+(defun new-vehicle (user-vehicle pos grid)
+  `(,user-vehicle ,pos ,grid))
+
 (defun user-vehicle (vehicle)
   (first vehicle))
 
@@ -36,7 +39,7 @@
         (user-vehicle
           (with-open-file (in file)
             (eval (read in)))))
-    `(,user-vehicle (0 0) ,(make-grid user-vehicle))))
+    (new-vehicle user-vehicle '(0 0) (make-grid user-vehicle))))
 
 (defun node (user-vehicle directions)
   (if directions
