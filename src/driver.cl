@@ -26,11 +26,11 @@
     (release-child vehicle directions i vehicles))
   (remhash (dir->coords directions) (grid vehicle))
   (setf
-    (elt
+    (child
       (node
         (user-vehicle vehicle)
         (reverse (cdr (reverse directions))))
-      (1+ (car (last directions))))
+      (car (last directions)))
     nil))
 
 (defun destroy-location (coords vehicles)

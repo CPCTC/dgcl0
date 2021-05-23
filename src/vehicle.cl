@@ -15,6 +15,9 @@
 (defun grid (vehicle)
   (third vehicle))
 
+(defun child (user-vehicle child)
+  (elt user-vehicle (1+ child)))
+
 (defun make-grid (user-vehicle &optional (reverse-directions nil) (grid (make-hash-table :test #'equal)))
   (cond
     (user-vehicle
@@ -23,7 +26,7 @@
           (setf coords (move-dir coords dir)))
         (setf (gethash coords grid) `(,(reverse reverse-directions) ,(gethash nil drcall->char))))
       (dotimes (i 4)
-        (make-grid (elt user-vehicle (1+ i)) (cons i reverse-directions) grid))
+        (make-grid (child user-vehicle i) (cons i reverse-directions) grid))
       grid)
     (T
       nil)))
@@ -37,5 +40,5 @@
 
 (defun node (user-vehicle directions)
   (if directions
-    (node (elt user-vehicle (1+ (car directions))) (cdr directions))
+    (node (child user-vehicle (car directions)) (cdr directions))
     user-vehicle))
