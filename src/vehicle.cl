@@ -6,20 +6,20 @@
 ;;;         - user vehicle: single form read from file.
 ;;;         - grid: hash table of coordinates -> directions and a character
 
-(defun new-vehicle (user-vehicle pos grid)
-  `(,user-vehicle ,pos ,grid))
+(defmacro new-vehicle (user-vehicle pos grid)
+  `(list ,user-vehicle ,pos ,grid))
 
-(defun user-vehicle (vehicle)
-  (first vehicle))
+(defmacro user-vehicle (vehicle)
+  `(first ,vehicle))
 
-(defun pos (vehicle)
-  (second vehicle))
+(defmacro pos (vehicle)
+  `(second ,vehicle))
 
-(defun grid (vehicle)
-  (third vehicle))
+(defmacro grid (vehicle)
+  `(third ,vehicle))
 
-(defun child (user-vehicle child)
-  (elt user-vehicle (1+ child)))
+(defmacro child (user-vehicle child)
+  `(elt ,user-vehicle (1+ ,child)))
 
 (defun make-grid (user-vehicle &optional (reverse-directions nil) (grid (make-hash-table :test #'equal)))
   (cond
