@@ -70,5 +70,6 @@
       (lambda (key value)
         (when (equal key coords)
           (destroy-node v (first value) vehicles)
-          (return-from destroy-location)))
-      (grid v))))
+          (return-from destroy-location vehicles)))
+      (grid v)))
+  vehicles)
