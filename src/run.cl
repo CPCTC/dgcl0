@@ -21,11 +21,13 @@
     (handler-case
       (funcall (first (user-vehicle *this-vehicle*)))
       (condition nil
-        (remove *this-vehicle* *other-vehicles*)))))
+        (remove *this-vehicle* *other-vehicles*))))
+  (values *other-vehicles*))
 
 (defun run (vehicles bullets)
   (multiple-value-setq (bullets vehicles)
     (step-bullets bullets vehicles))
   (dolist (v vehicles)
-    (run-vehicle v vehicles))
+    (setf vehicles
+      (run-vehicle v vehicles)))
   (values vehicles bullets))
