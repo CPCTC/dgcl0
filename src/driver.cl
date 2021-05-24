@@ -62,14 +62,15 @@
         (user-vehicle vehicle)
         (reverse (cdr (reverse directions))))
       (car (last directions)))
-    nil))
+    nil)
+  vehicles)
 
 (defun destroy-location (coords vehicles)
   (dolist (v vehicles)
     (maphash
       (lambda (key value)
         (when (equal key coords)
-          (destroy-node v (first value) vehicles)
+          (setf vehicles (destroy-node v (first value) vehicles))
           (return-from destroy-location vehicles)))
       (grid v)))
   vehicles)
