@@ -54,7 +54,7 @@
     ;; As children are released, thier grid entries
     ;; in the parent vehicle are removed and transferred
     ;; to the new vehicle.
-    (release-child vehicle directions i vehicles))
+    (setf vehicles (release-child vehicle directions i vehicles)))
   (remhash (dir->coords directions) (grid vehicle))
   (setf
     (child
