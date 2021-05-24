@@ -11,7 +11,8 @@
     (incf (third b))
     (if (> (third b) max-bullet-lifetime)
       (remove b bullets)
-      (destroy-location (first b) vehicles))))
+      (destroy-location (first b) vehicles)))
+  (values bullets vehicles))
 
 (defun run-vehicle (*this-vehicle* *other-vehicles*)
   (declare (special *this-vehicle* *other-vehicles*))
@@ -23,7 +24,8 @@
         (remove *this-vehicle* *other-vehicles*)))))
 
 (defun run (vehicles bullets)
-  (step-bullets bullets vehicles)
+  (multiple-value-setq (bullets vehicles)
+    (step-bullets bullets vehicles))
   (dolist (v vehicles)
     (run-vehicle v vehicles))
   (values vehicles bullets))
