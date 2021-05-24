@@ -18,6 +18,9 @@
 (defmacro child (user-vehicle child)
   `(elt ,user-vehicle (+ 2 ,child)))
 
+(defmacro uv-char (user-vehicle)
+  `(first ,user-vehicle))
+
 (defun push-chars (user-vehicle)
   (when user-vehicle
     (push (gethash nil drcall->char) user-vehicle)
