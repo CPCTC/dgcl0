@@ -16,6 +16,6 @@
 
     (let (bullets)
       (do nil ((= 1 (length vehicles)))
-        (run vehicles bullets)
+        (multiple-value-setq (vehicles bullets) (run vehicles bullets))
         (draw vehicles bullets)
         (read-char)))))

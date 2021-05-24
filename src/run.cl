@@ -25,4 +25,5 @@
 (defun run (vehicles bullets)
   (step-bullets bullets vehicles)
   (dolist (v vehicles)
-    (run-vehicle v vehicles)))
+    (run-vehicle v vehicles))
+  (values vehicles bullets))
