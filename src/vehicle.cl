@@ -4,10 +4,10 @@
 
 ;;; Vehicles have the following stuff in em.
 ;;;         - user vehicle: single form read from file.
-;;;         - grid: hash table of coordinates -> directions and a character
+;;;         - pos: position of top node on global grid.
 
-(defmacro new-vehicle (user-vehicle pos grid)
-  `(list ,user-vehicle ,pos ,grid))
+(defmacro new-vehicle (user-vehicle pos)
+  `(list ,user-vehicle ,pos))
 
 (defmacro user-vehicle (vehicle)
   `(first ,vehicle))
@@ -15,31 +15,23 @@
 (defmacro pos (vehicle)
   `(second ,vehicle))
 
-(defmacro grid (vehicle)
-  `(third ,vehicle))
-
 (defmacro child (user-vehicle child)
-  `(elt ,user-vehicle (1+ ,child)))
+  `(elt ,user-vehicle (+ 2 ,child)))
 
-(defun make-grid (user-vehicle &optional (reverse-directions nil) (grid (make-hash-table :test #'equal)))
-  (cond
-    (user-vehicle
-      (let ((coords '(0 0)))
-        (dolist (dir reverse-directions)
-          (setf coords (move-dir coords dir)))
-        (setf (gethash coords grid) `(,(reverse reverse-directions) ,(gethash nil drcall->char))))
-      (dotimes (i 4)
-        (make-grid (child user-vehicle i) (cons i reverse-directions) grid))
-      grid)
-    (T
-      nil)))
+(defun push-chars (user-vehicle)
+  (when user-vehicle
+    (push (gethash nil drcall->char) user-vehicle)
+    (dotimes (i 4)
+      (setf (child user-vehicle i)
+        (push-chars (child user-vehicle i))))
+    user-vehicle))
 
 (defun make-vehicle-file (file)
   (let (
         (user-vehicle
           (with-open-file (in file)
             (eval (read in)))))
-    (new-vehicle user-vehicle '(0 0) (make-grid user-vehicle))))
+    (new-vehicle (push-chars user-vehicle) '(0 0))))
 
 (defun node (user-vehicle directions)
   (if directions
