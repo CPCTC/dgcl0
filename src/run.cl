@@ -20,7 +20,7 @@
   (let (*driver-directions*)
     (declare (special *driver-directions*))
     (handler-case
-      (funcall (first (user-vehicle *this-vehicle*)))
+      (funcall (uv-func (user-vehicle *this-vehicle*)))
       (condition nil
         (remove *this-vehicle* *other-vehicles*))))
   (values *other-vehicles*))

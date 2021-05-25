@@ -21,6 +21,9 @@
 (defmacro uv-char (user-vehicle)
   `(first ,user-vehicle))
 
+(defmacro uv-func (user-vehicle)
+  `(second ,user-vehicle))
+
 (defun push-chars (user-vehicle)
   (when user-vehicle
     (push (gethash nil drcall->char) user-vehicle)
