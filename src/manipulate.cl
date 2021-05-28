@@ -14,48 +14,62 @@
          (child-pos       ;; on global grid
            (mapcar #'+
              (pos vehicle)
-             (dir->coords child-directions)))
-         (child-grid
-           (make-grid child-uv)))
+             (dir->coords child-directions))))
+    (when child-uv
+      (setf
+        (child
+          (node
+            (user-vehicle vehicle)
+            directions)
+          child)
+        nil)
+      (push (new-vehicle child-uv child-pos) vehicles))
+    vehicles))
+
+(defun destroy-node (vehicle directions vehicles)
+  (dotimes (i 4)
+    (setf vehicles (release-child vehicle directions i vehicles)))
+  (if directions
     (setf
       (child
         (node
           (user-vehicle vehicle)
-          directions)
-        child)
+          (reverse (cdr (reverse directions))))
+        (car (last directions)))
       nil)
-    (maphash
-      (lambda (k v)
-        (let ((child-grid-key
-                (mapcar #'- k (dir->coords child-directions))))
-          (when (gethash child-grid-key child-grid)
-            (remhash k (grid vehicle))
-            (setf (second (gethash child-grid-key child-grid)) (second v)))))
-      (grid vehicle))
-    (push (new-vehicle child-uv child-pos child-grid) vehicles)))
-
-(defun destroy-node (vehicle directions vehicles)
-  (dotimes (i 4)
-    ;; As children are released, thier grid entries
-    ;; in the parent vehicle are removed and transferred
-    ;; to the new vehicle.
-    (setf vehicles (release-child vehicle directions i vehicles)))
-  (remhash (dir->coords directions) (grid vehicle))
-  (setf
-    (child
-      (node
-        (user-vehicle vehicle)
-        (reverse (cdr (reverse directions))))
-      (car (last directions)))
-    nil)
+    (setf vehicles (delete vehicle vehicles)))
   vehicles)
+
+(defun douv-impl (fn uv &optional reverse-dir)
+  (when uv
+    (funcall fn uv (reverse reverse-dir))
+    (dotimes (i 4)
+      (douv-impl fn (child uv i) (cons i reverse-dir)))))
+
+(defmacro douv ((uv-sym dir-sym uv) &body b)
+  `(block douv
+    (douv-impl
+      (lambda (,uv-sym ,dir-sym)
+        ,@b)
+      ,uv)))
+
+(defun all-nodes (vehicles)
+  (let ((nodes (make-hash-table :test #'equal)))
+    (dolist (v vehicles nodes)
+      (douv (uv dir (user-vehicle v))
+        (declare (ignore uv))
+        (setf (gethash (dir->coords dir) nodes) (list v dir))))))
+
+(defgeneric query-location (data coords))
+
+(defmethod query-location ((data hash-table) coords)
+  (values-list (gethash coords data)))
+
+(defmethod query-location ((data list) coords)  ;; if list of vehicles
+  (query-location (all-nodes data) coords))
 
 (defun destroy-location (coords vehicles)
-  (dolist (v vehicles)
-    (maphash
-      (lambda (key value)
-        (when (equal key coords)
-          (setf vehicles (destroy-node v (first value) vehicles))
-          (return-from destroy-location vehicles)))
-      (grid v)))
-  vehicles)
+  (multiple-value-bind (vehicle directions) (query-location vehicles coords)
+    (if vehicle
+      (setf vehicles (destroy-node vehicle directions vehicles)))
+    vehicles))
