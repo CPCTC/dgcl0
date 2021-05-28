@@ -1,20 +1,8 @@
 (provide 'draw)
 
 (require 'const (make-pathname :directory '(:relative "src") :name "const" :type "cl"))
+(require 'manipulate (make-pathname :directory '(:relative "src") :name "manipulate" :type "cl"))
 (require 'vehicle (make-pathname :directory '(:relative "src") :name "vehicle" :type "cl"))
-
-(defun uv-points (uv &optional reverse-directions)
-  (if uv
-    (let (points)
-      (push
-        (list (dir->coords (reverse reverse-directions)) (uv-char uv))
-        points)
-      (dotimes (i 4)
-        (let ((child-points
-                (uv-points (child uv i) (cons i reverse-directions))))
-          (if child-points
-            (setf points (nconc points child-points)))))
-      points)))
 
 (defun find-origin-size (coords)
   (let* (
@@ -38,7 +26,12 @@
     (dolist (b bullets)
       (push (list (first b) bullet-char) points))
     (dolist (v vehicles)
-      (setf points (nconc (uv-points (user-vehicle v)) points)))
+      (douv (uv dir (user-vehicle v))
+        (push
+          (list
+            (mapcar #'+ (dir->coords dir) (pos v))
+            (uv-char uv))
+          points)))
     (multiple-value-bind (origin size) (find-origin-size (mapcar #'first points))
       (values
         (mapcar
