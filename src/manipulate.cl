@@ -58,12 +58,12 @@
     (dolist (v vehicles nodes)
       (douv (uv dir (user-vehicle v))
         (declare (ignore uv))
-        (setf (gethash (dir->coords dir) nodes) (list v dir))))))
+        (setf (gethash (mapcar #'+ (dir->coords dir) (pos v)) nodes) (list v dir))))))
 
 (defgeneric query-location (data coords))
 
 (defmethod query-location ((data hash-table) coords)
-  (values-list (gethash coords data)))
+  (values-list (gethash coords data (list nil nil))))
 
 (defmethod query-location ((data list) coords)  ;; if list of vehicles
   (query-location (all-nodes data) coords))
