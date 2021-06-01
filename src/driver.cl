@@ -13,4 +13,5 @@
     children    ;; Check which children are still attached.
     release     ;; Split off a child.
     explode     ;; Destroy the area around the caller.
+    mimic       ;; Take on the appearance of another type of node
     ))
