@@ -1,9 +1,3 @@
-(provide 'draw)
-
-(require 'const (make-pathname :directory '(:relative "src") :name "const" :type "cl"))
-(require 'manipulate (make-pathname :directory '(:relative "src") :name "manipulate" :type "cl"))
-(require 'vehicle (make-pathname :directory '(:relative "src") :name "vehicle" :type "cl"))
-
 (defun find-origin-size (coords)
   (let* (
           (xs

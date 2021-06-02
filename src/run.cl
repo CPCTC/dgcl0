@@ -1,9 +1,3 @@
-(provide 'run)
-
-(require 'manipulate (make-pathname :directory '(:relative "src") :name "manipulate" :type "cl"))
-(require 'driver (make-pathname :directory '(:relative "src") :name "driver" :type "cl"))
-(require 'vehicle (make-pathname :directory '(:relative "src") :name "vehicle" :type "cl"))
-
 ;; bullets: '(pos vel count)
 (defun step-bullets (bullets vehicles)
   (dolist (b bullets)

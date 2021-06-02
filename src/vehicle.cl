@@ -1,7 +1,3 @@
-(provide 'vehicle)
-
-(require 'const (make-pathname :directory '(:relative "src") :name "const" :type "cl"))
-
 ;;; Vehicles have the following stuff in em.
 ;;;         - user vehicle: single form read from file.
 ;;;         - pos: position of top node on global grid.

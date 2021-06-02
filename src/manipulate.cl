@@ -1,8 +1,3 @@
-(provide 'manipulate)
-
-(require 'const (make-pathname :directory '(:relative "src") :name "const" :type "cl"))
-(require 'vehicle (make-pathname :directory '(:relative "src") :name "vehicle" :type "cl"))
-
 (defun release-child (vehicle directions child vehicles)
   (let* (
          (child-directions

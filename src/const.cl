@@ -1,5 +1,3 @@
-(provide 'const)
-
 (defun move-dir (coords dir)
   (let ((add (elt '((0 1) (-1 0) (0 -1) (1 0)) dir)))
     (mapcar #'+ coords add)))
