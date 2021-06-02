@@ -9,7 +9,7 @@
       (setf vehicles (destroy-location (first b) vehicles))))
   (values bullets vehicles))
 
-(defun run-vehicle (*this-vehicle* *other-vehicles*)
+(defun step-vehicle (*this-vehicle* *other-vehicles*)
   (declare (special *this-vehicle* *other-vehicles*))
   (let (*driver-directions*)
     (declare (special *driver-directions*))
@@ -19,10 +19,10 @@
         (remove *this-vehicle* *other-vehicles*))))
   (values *other-vehicles*))
 
-(defun run (vehicles bullets)
+(defun timestep (vehicles bullets)
   (multiple-value-setq (bullets vehicles)
     (step-bullets bullets vehicles))
   (dolist (v vehicles)
     (setf vehicles
-      (run-vehicle v vehicles)))
+      (step-vehicle v vehicles)))
   (values vehicles bullets))

@@ -5,10 +5,10 @@
     ((:file "main"
         :depends-on (
           "vehicle"
-          "run"
+          "step"
           "draw"
           ))
-     (:file "run"
+     (:file "step"
         :depends-on (
           "manipulate"
           "vehicle"

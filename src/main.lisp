@@ -12,6 +12,6 @@
 
     (let (bullets)
       (do nil ((= 1 (length vehicles)))
-        (multiple-value-setq (vehicles bullets) (run vehicles bullets))
+        (multiple-value-setq (vehicles bullets) (timestep vehicles bullets))
         (draw vehicles bullets)
         (read-char)))))
