@@ -1,17 +1,20 @@
-(defun main ()
-  "- For each vehicle, create a vehicle structure with:
-          - The read user vehicle.
-          - The vehicle's grid. The grid keeps track of which driver calls each part has called. It's also used for displaying the vehicle.
-  - Main loop:
-          - Run each vehicle, executing actions. Step the world state.
-          - Draw each vehicle."
+;;;; This main function is unnecessary. If you want,
+;;;; you can instead load a bunch of vehicles with
+;;;; defvehicle, then start the simulation with
+;;;; (run *worldstate*). This function is mostly
+;;;; for creating standalone binaries.
 
-  (let (vehicles)
-    (dolist (file (cdr *posix-argv*))
-      (push (make-vehicle-file file) vehicles))
+(in-package :dgcl0)
 
-    (let (bullets)
-      (do nil ((= 1 (length vehicles)))
-        (multiple-value-setq (vehicles bullets) (timestep vehicles bullets))
-        (draw vehicles bullets)
-        (read-char)))))
+;; Avoid compile warning;
+;; This is provided by the
+;; first defvehicle.
+(defvar *worldstate*)
+
+(defun main (argv)
+  ;; Make sure we have everything needed to compile a vehicle
+  (require 'dgcl0-defvehicle)
+
+  (dolist (file (cdr argv))     ; assuming posix-style argv
+    (load file))
+  (run *worldstate*))
