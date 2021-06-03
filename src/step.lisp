@@ -1,3 +1,4 @@
+#|
 ;; bullets: '(pos vel count)
 (defun step-bullets (bullets vehicles)
   (dolist (b bullets)
@@ -26,3 +27,5 @@
     (setf vehicles
       (step-vehicle v vehicles)))
   (values vehicles bullets))
+
+|#

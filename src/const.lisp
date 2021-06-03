@@ -1,3 +1,4 @@
+#|
 (defun move-dir (coords dir)
   (let ((add (elt '((0 1) (-1 0) (0 -1) (1 0)) dir)))
     (mapcar #'+ coords add)))
@@ -20,3 +21,4 @@
 
 (defconstant bullet-char #\*)
 (defconstant max-bullet-lifetime 50)
+|#

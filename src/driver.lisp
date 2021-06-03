@@ -1,3 +1,4 @@
+#|
 (defpackage driver
   (:documentation "Public interface for calls to the dgcl0 driver from loaded vehicles.")
   (:export
@@ -13,3 +14,4 @@
     explode     ;; Destroy the area around the caller.
     mimic       ;; Take on the appearance of another type of node
     ))
+|#

@@ -1,3 +1,4 @@
+#|
 (defun release-child (vehicle directions child vehicles)
   (let* (
          (child-directions
@@ -68,3 +69,4 @@
     (if vehicle
       (setf vehicles (destroy-node vehicle directions vehicles)))
     vehicles))
+|#

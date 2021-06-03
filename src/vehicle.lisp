@@ -1,3 +1,4 @@
+#|
 ;;; Vehicles have the following stuff in em.
 ;;;         - user vehicle: single form read from file.
 ;;;         - pos: position of top node on global grid.
@@ -39,3 +40,4 @@
   (if directions
     (node (child user-vehicle (car directions)) (cdr directions))
     user-vehicle))
+|#

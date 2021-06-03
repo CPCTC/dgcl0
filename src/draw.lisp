@@ -1,3 +1,4 @@
+#|
 (defun find-origin-size (coords)
   (let* (
           (xs
@@ -57,3 +58,4 @@
       (dolist (p points)
         (plot field (second size) p))
       (display field size))))
+|#
