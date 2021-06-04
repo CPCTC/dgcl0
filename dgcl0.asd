@@ -10,4 +10,9 @@
           "package"
           "run"
           ;; defvehicle at runtime
-          ))))))
+          ))
+     (:file "driver"
+        :depends-on (
+          "package"
+          ))
+     ))))
