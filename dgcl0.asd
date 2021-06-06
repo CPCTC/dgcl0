@@ -15,4 +15,8 @@
         :depends-on (
           "package"
           ))
+     (:file "vehicle"
+        :depends-on (
+          "package"
+          ))
      ))))
