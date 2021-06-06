@@ -50,3 +50,21 @@
     (dolist (d directions)
       (setf coords (move-dir coords d)))
     coords))
+
+(defun douv-impl (fn node &optional (visited (make-hash-table :test #'equal)) reverse-dir)
+  (let* ((coords
+           (dir->coords reverse-dir))
+         (already-here-p
+           (second (multiple-value-list (gethash coords visited)))))
+    (when (and node (not already-here-p))
+      (funcall fn node (reverse reverse-dir))
+      (setf (gethash coords visited) t)
+      (dotimes (i 4)
+        (douv-impl fn (connection node i) visited (cons i reverse-dir))))))
+
+(defmacro douv ((node-sym dir-sym top) &body b)
+  `(block douv
+    (douv-impl
+      (lambda (,node-sym ,dir-sym)
+        ,@b)
+      ,top)))
