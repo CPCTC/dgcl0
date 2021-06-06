@@ -28,13 +28,13 @@
      :accessor :node-lambda
      :initarg :lambda)
    (connections
-     :initarg :connections)
+     :initform (make-array 4 :initial-element nil))
    (char
      :accessor :node-char
      :initform #\.)))
 
-(defmacro make-node (lambda &optional (connections (make-array 4 :initial-element nil)))
-  `(make-instance 'node :lambda ,lambda :connections ,connections))
+(defmacro make-node (lambda)
+  `(make-instance 'node :lambda ,lambda))
 
 (defmacro connection (node n)
   `(elt (slot-value ,node 'connections) ,n))
