@@ -36,10 +36,8 @@
 (defmacro make-node (lambda &optional (connections (make-array 4 :initial-element nil)))
   `(make-instance 'node :lambda ,lambda :connections ,connections))
 
-(defun connection (node n)
-  (declare (type node node))
-  (when (and (>= n 0) (< n 4))
-    (elt (slot-value node 'connections) n)))
+(defmacro connection (node n)
+  `(elt (slot-value ,node 'connections) ,n))
 
 ;;; Utility functions ;;;
 
