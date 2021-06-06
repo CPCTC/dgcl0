@@ -41,6 +41,10 @@
 
 ;;; Utility functions ;;;
 
+;; All of these use a coordinate system
+;; that ignores vehicle location and is
+;; relative to the top node.
+
 (defun move-dir (coords dir)
   (mapcar #'+ coords
     (elt '((0 1) (-1 0) (0 -1) (1 0)) dir)))
