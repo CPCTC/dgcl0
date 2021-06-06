@@ -5,6 +5,8 @@
 
 (in-package :dgcl0)
 
+;;; Vehicle class ;;;
+
 (defclass vehicle nil
   ((pos
      :accessor :pos
@@ -18,6 +20,8 @@
 
 (defmacro make-vehicle (top &optional (pos (list 0 0)))
   `(make-instance 'vehicle :top ,top :pos ,pos))
+
+;;; Node class ;;;
 
 (defclass node nil
   ((lambda
@@ -36,6 +40,8 @@
   (declare (type node node))
   (when (and (>= n 0) (< n 4))
     (elt (slot-value node 'connections) n)))
+
+;;; Utility functions ;;;
 
 (defun move-dir (coords dir)
   (mapcar #'+ coords
