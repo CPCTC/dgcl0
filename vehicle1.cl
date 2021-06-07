@@ -2,7 +2,7 @@
   (
     (top
       (lambda ()
-        (let ((sensor-results (driver:call 2 nil)))     ;; Call the sensor and get it's results
+        (let ((sensor-results (funcall (driver::neighbor :west))))
           (if sensor-results
             (driver:call 1 nil))
           nil)))
@@ -12,4 +12,8 @@
     (gun
       (lambda ()
         (driver:shoot -1 0))))
-  `(,top nil (,gun nil nil nil nil) (,sensor nil nil nil nil) nil))
+  (dgcl0:defvehicle "Vehicle1"
+    :nodes
+    ((top (0 0))
+     (sensor (0 -1))
+     (gun (-1 0)))))

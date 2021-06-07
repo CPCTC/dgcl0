@@ -1,2 +1,6 @@
 (defpackage :dgcl0
-  (:use :cl))
+  (:use :cl)
+  (:export
+    :main
+    :defvehicle
+    :run))

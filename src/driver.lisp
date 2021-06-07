@@ -5,7 +5,7 @@
 
 (defpackage :driver
   (:export
-    neighbor    ;; get information about connected nodes (like thier lambda objects).
+    neighbor    ;; Get lambdas of connected nodes.
     sense	;; Gather information from the environment.
     shoot	;; Fire a projectile that can destroy nodes.
     translate   ;; Shift your vehicle in one of the four cardinal directions.
