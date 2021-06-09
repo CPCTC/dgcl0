@@ -6,11 +6,6 @@
 
 (in-package :dgcl0)
 
-;; Avoid compile warning;
-;; This is provided by the
-;; first defvehicle.
-(defvar *worldstate*)
-
 (defun main (argv)
   ;; Make sure we have everything needed to compile a vehicle
   (require 'dgcl0-defvehicle)
