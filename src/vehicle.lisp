@@ -48,6 +48,9 @@
 ;; that ignores vehicle location and is
 ;; relative to the top node.
 
+(defmacro opposite-dir (dir)
+  `(mod (+ ,dir 2) 4))
+
 (defun move-dir (coords dir)
   (mapcar #'+ coords
     (elt '((0 1) (-1 0) (0 -1) (1 0)) dir)))

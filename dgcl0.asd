@@ -12,6 +12,12 @@
           "env"
           ;; defvehicle at runtime
           ))
+     (:file "defvehicle"
+        :depends-on (
+          "package"
+          "env"
+          "vehicle"
+          ))
      (:file "env"
         :depends-on (
           "package"
