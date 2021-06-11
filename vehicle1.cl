@@ -2,10 +2,9 @@
   (
     (top
       (lambda ()
-        (let ((sensor-results (funcall (driver::neighbor :west))))
+        (let ((sensor-results (funcall (driver:neighbor :west))))
           (if sensor-results
-            (driver:call 1 nil))
-          nil)))
+            (funcall (driver:neighbor :north))))))
     (sensor
       (lambda ()
         (driver:sense -1 0)))
