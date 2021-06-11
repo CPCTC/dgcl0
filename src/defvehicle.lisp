@@ -86,6 +86,7 @@
 
 (defmacro defvehicle (name &key (nodes (error "This vehicle has no nodes.")))
   `(add-vehicle
+     *worldstate*
      (make-vehicle
        ,name
        (multiple-value-bind (node-table top) (parse-nodes (prepare-node-specs ,nodes))
