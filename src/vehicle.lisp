@@ -9,13 +9,13 @@
 
 (defclass vehicle nil
   ((pos
-     :accessor :pos
+     :accessor pos
      :initarg :pos)
    (top
-     :accessor :top
+     :accessor top
      :initarg :top)
    (rotation
-     :accessor :rotation
+     :accessor rotation
      :initform 0)))
 
 (defmacro make-vehicle (top &optional (pos (list 0 0)))
@@ -25,12 +25,12 @@
 
 (defclass node nil
   ((lambda
-     :accessor :node-lambda
+     :accessor node-lambda
      :initarg :lambda)
    (connections
      :initform (make-array 4 :initial-element nil))
    (char
-     :accessor :node-char
+     :accessor node-char
      :initform #\.)))
 
 (defmacro make-node (lambda)
