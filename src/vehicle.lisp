@@ -8,7 +8,10 @@
 ;;; Vehicle class ;;;
 
 (defclass vehicle nil
-  ((pos
+  ((name
+     :accessor name
+     :initarg :name)
+   (pos
      :accessor pos
      :initarg :pos)
    (top
@@ -18,8 +21,8 @@
      :accessor rotation
      :initform 0)))
 
-(defmacro make-vehicle (top &optional (pos (list 0 0)))
-  `(make-instance 'vehicle :top ,top :pos ,pos))
+(defmacro make-vehicle (name top pos)
+  `(make-instance 'vehicle :name ,name :top ,top :pos ,pos))
 
 ;;; Node class ;;;
 
