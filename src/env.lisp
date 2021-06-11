@@ -15,7 +15,7 @@
   (make-instance 'env))
 
 (defmacro add-vehicle (worldstate v)
-  `(push ,v (slot-value worldstate 'vehicles)))
+  `(push ,v (slot-value ,worldstate 'vehicles)))
   ;; also move on in the list checked by next-vehicle-pos
 
 (defun next-vehicle-pos ()
