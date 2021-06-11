@@ -8,7 +8,8 @@
      (:file "main"
         :depends-on (
           "package"
-          "run"
+          ;"run"
+          "env"
           ;; defvehicle at runtime
           ))
      (:file "env"
