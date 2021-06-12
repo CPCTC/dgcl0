@@ -37,6 +37,13 @@
         (setf (gethash node (grid worldstate)) pos)
         (push node added)))))
 
+(defun rm-grid-nodes (worldstate vehicle)
+  (douv (node dir (top vehicle))
+    (let ((pos
+            (local->global-pos vehicle (dir->coords dir))))
+      (remhash pos (grid worldstate))
+      (remhash node (grid worldstate)))))
+
 (defun add-vehicle (worldstate v)
   (push v (slot-value worldstate 'vehicles))
   (add-grid-nodes worldstate v))
