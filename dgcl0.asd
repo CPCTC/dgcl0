@@ -28,6 +28,7 @@
      (:file "env"
         :depends-on (
           "package"
+          "vehicle"
           ))
      (:file "driver"
         :depends-on (

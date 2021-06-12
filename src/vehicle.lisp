@@ -78,3 +78,12 @@
       (lambda (,node-sym ,dir-sym)
         ,@b)
       ,top)))
+
+;; rotate *pos* *rotation* times
+;; counterclockwise around (0 0)
+(defun rotate (pos rotation)
+  (dotimes (i rotation pos)
+    (setf pos (list (- (second pos)) (first pos)))))
+
+(defun local->global-pos (vehicle pos)
+  (mapcar #'+ (pos vehicle) (rotate pos (rotation vehicle))))

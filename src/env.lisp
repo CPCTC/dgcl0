@@ -8,6 +8,9 @@
 (defclass env nil
   ((vehicles
      :initform nil)
+   ;; Grid holds both
+   ;; global-pos -> node
+   ;; node -> global-pos
    (grid
      :accessor grid
      :initform (make-hash-table :test #'equal))))
@@ -18,8 +21,25 @@
     (dolist (,v-sym (slot-value ,worldstate 'vehicles))
       ,@b)))
 
-(defmacro add-vehicle (worldstate v)
-  `(push ,v (slot-value ,worldstate 'vehicles)))
+(define-condition collision () ())
+
+(defun add-grid-nodes (worldstate vehicle)
+  (let (added)
+    (douv (node dir (top vehicle))
+      (let ((pos
+              (local->global-pos vehicle (dir->coords dir))))
+        (when (gethash pos (grid worldstate))
+          (dolist (a added)
+            (remhash a (grid worldstate)))
+          (error 'collision))
+        (setf (gethash pos (grid worldstate)) node)
+        (push pos added)
+        (setf (gethash node (grid worldstate)) pos)
+        (push node added)))))
+
+(defun add-vehicle (worldstate v)
+  (push v (slot-value worldstate 'vehicles))
+  (add-grid-nodes worldstate v))
   ;; also move on in the list checked by next-vehicle-pos
 
 (defmacro rm-vehicle (worldstate vehicle)
@@ -28,10 +48,6 @@
 
 (defmacro done-p (worldstate)
   `(= (length (slot-value ,worldstate 'vehicles)) 1))
-
-;; Set up the grid. TODO
-(defun initialize (worldstate)
-  (declare (ignore worldstate)))
 
 (defun next-vehicle-pos ()
   ;; check the worldstate (the map) for a good place to put it.
