@@ -17,6 +17,7 @@
           "package"
           "vehicle"
           "env"
+          ;"env-logic"
           ;"draw"
           ))
      (:file "defvehicle"
