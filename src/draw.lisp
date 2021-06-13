@@ -1,46 +1,30 @@
-#|
-(defun find-origin-size (coords)
-  (let* (
-          (xs
-            (mapcar #'second coords))
-          (ys
-            (mapcar #'first coords))
-          (min-coord
-            (list (apply #'min ys) (apply #'min xs)))
-          (max-coord
-            (list (apply #'max ys) (apply #'max xs)))
-          (size
-            (mapcar #'+ (mapcar #'- max-coord min-coord) (list 1 1)))
-          (origin
-            (mapcar #'- min-coord)))
-    (values origin size)))
+(in-package :dgcl0)
 
-;;; point: '((y x) char)
-(defun collect-points (vehicles bullets)
-  (let (points)
-    (dolist (b bullets)
-      (push (list (first b) bullet-char) points))
-    (dolist (v vehicles)
-      (douv (uv dir (user-vehicle v))
-        (push
-          (list
-            (mapcar #'+ (dir->coords dir) (pos v))
-            (uv-char uv))
-          points)))
-    (multiple-value-bind (origin size) (find-origin-size (mapcar #'first points))
-      (values
-        (mapcar
-          (lambda (p)
-            (list
-              (mapcar #'+ (first p) origin)
-              (second p)))
-          points)
-        size))))
+(defun find-size (worldstate)
+  (let (poses)
+    (do-grid (node pos worldstate)
+      (declare (ignore node))
+      (push pos poses))
+    (let* ((xs
+             (mapcar #'second poses))
+           (ys
+             (mapcar #'first poses))
+           (min-pos
+             (list (apply #'min ys) (apply #'min xs)))
+           (max-pos
+             (list (apply #'max ys) (apply #'max xs)))
+           (size
+             (mapcar #'+ (mapcar #'- max-pos min-pos) '(1 1)))
+           (origin
+             (mapcar #'- min-pos)))
+      (values size origin))))
 
-(defmacro plot (field width point)
-  `(setf
-    (elt ,field (+ (* (first (first ,point)) ,width) (second (first ,point))))
-    (second ,point)))
+(defun plot (field width pos char)
+  (setf
+    (elt field
+         (+ (* (first pos) width)
+            (second pos)))
+    char))
 
 (defun display (field field-size)
   (let ((counter 0))
@@ -51,11 +35,10 @@
       (format t "~a " (elt field i))
       (incf counter))))
 
-(defun draw (vehicles bullets)
-  (multiple-value-bind (points size) (collect-points vehicles bullets)
+(defun draw (worldstate)
+  (multiple-value-bind (size origin) (find-size worldstate)
     (let ((field
             (make-array (apply #'* size) :initial-element #\Space)))
-      (dolist (p points)
-        (plot field (second size) p))
+      (do-grid (node pos worldstate)
+        (plot field (second size) (mapcar #'+ pos origin) (node-char node)))
       (display field size))))
-|#
