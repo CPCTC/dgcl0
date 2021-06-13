@@ -12,7 +12,6 @@
    ;; global-pos -> node
    ;; node -> global-pos
    (grid
-     :accessor grid
      :initform (make-hash-table :test #'equal))))
   ;; more coming soon...
 
@@ -22,19 +21,19 @@
       ,@b)))
 
 (defmacro get-grid-elt (worldstate designator)
-  `(gethash designator (grid worldstate)))
+  `(gethash designator (slot-value worldstate 'grid)))
 
 (define-condition collision () ())
 
 (defun add-grid-elt (worldstate node pos)
-  (when (gethash pos (grid worldstate))
+  (when (gethash pos (slot-value worldstate 'grid))
     (error 'collision))
-  (setf (gethash pos (grid worldstate)) node)
-  (setf (gethash node (grid worldstate)) pos))
+  (setf (gethash pos (slot-value worldstate 'grid)) node)
+  (setf (gethash node (slot-value worldstate 'grid)) pos))
 
 (defun rm-grid-elt (worldstate designator)
-  (remhash (gethash designator (grid worldstate)) (grid worldstate))
-  (remhash designator (grid worldstate)))
+  (remhash (gethash designator (slot-value worldstate 'grid)) (slot-value worldstate 'grid))
+  (remhash designator (slot-value worldstate 'grid)))
 
 (defun add-vehicle-nodes (worldstate vehicle)
   (let (added)
