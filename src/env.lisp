@@ -21,32 +21,41 @@
     (dolist (,v-sym (slot-value ,worldstate 'vehicles))
       ,@b)))
 
+(defmacro get-grid-elt (worldstate designator)
+  `(gethash designator (grid worldstate)))
+
 (define-condition collision () ())
 
-(defun add-grid-nodes (worldstate vehicle)
+(defun add-grid-elt (worldstate node pos)
+  (when (gethash pos (grid worldstate))
+    (error 'collision))
+  (setf (gethash pos (grid worldstate)) node)
+  (setf (gethash node (grid worldstate)) pos))
+
+(defun rm-grid-elt (worldstate designator)
+  (remhash (gethash designator (grid worldstate)) (grid worldstate))
+  (remhash designator (grid worldstate)))
+
+(defun add-vehicle-nodes (worldstate vehicle)
   (let (added)
     (douv (node dir (top vehicle))
       (let ((pos
               (local->global-pos vehicle (dir->coords dir))))
-        (when (gethash pos (grid worldstate))
-          (dolist (a added)
-            (remhash a (grid worldstate)))
-          (error 'collision))
-        (setf (gethash pos (grid worldstate)) node)
-        (push pos added)
-        (setf (gethash node (grid worldstate)) pos)
+        (handler-case
+          (add-grid-elt node pos)
+          (collision (er)
+            (dolist (a added)
+              (rm-grid-elt worldstate a))
+            (error er)))
         (push node added)))))
 
-(defun rm-grid-nodes (worldstate vehicle)
+(defun rm-vehicle-nodes (worldstate vehicle)
   (douv (node dir (top vehicle))
-    (let ((pos
-            (local->global-pos vehicle (dir->coords dir))))
-      (remhash pos (grid worldstate))
-      (remhash node (grid worldstate)))))
+    (rm-grid-elt node)))
 
 (defun add-vehicle (worldstate v)
   (push v (slot-value worldstate 'vehicles))
-  (add-grid-nodes worldstate v))
+  (add-vehicle-nodes worldstate (top v)))
   ;; also move on in the list checked by next-vehicle-pos
 
 (defmacro rm-vehicle (worldstate vehicle)
