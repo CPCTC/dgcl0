@@ -21,7 +21,7 @@
       ,@b)))
 
 (defmacro get-grid-elt (worldstate designator)
-  `(gethash designator (slot-value worldstate 'grid)))
+  `(gethash ,designator (slot-value ,worldstate 'grid)))
 
 (define-condition collision () ())
 
@@ -41,7 +41,7 @@
       (let ((pos
               (local->global-pos vehicle (dir->coords dir))))
         (handler-case
-          (add-grid-elt node pos)
+          (add-grid-elt worldstate node pos)
           (collision (er)
             (dolist (a added)
               (rm-grid-elt worldstate a))
@@ -50,11 +50,12 @@
 
 (defun rm-vehicle-nodes (worldstate vehicle)
   (douv (node dir (top vehicle))
-    (rm-grid-elt node)))
+    (declare (ignore dir))
+    (rm-grid-elt worldstate node)))
 
 (defun add-vehicle (worldstate v)
   (push v (slot-value worldstate 'vehicles))
-  (add-vehicle-nodes worldstate (top v)))
+  (add-vehicle-nodes worldstate v))
   ;; also move on in the list checked by next-vehicle-pos
 
 (defmacro rm-vehicle (worldstate vehicle)
