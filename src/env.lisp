@@ -69,7 +69,7 @@
   ;; check the worldstate (the map) for a good place to put it.
 
   ;; but for now....
-  (list (- (random 200) 100) (- (random 200) 100)))
+  '(0 0))
 
 ;;; *Worldstate* var ;;;
 
