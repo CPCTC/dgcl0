@@ -20,6 +20,17 @@
     (dolist (,v-sym (slot-value ,worldstate 'vehicles))
       ,@b)))
 
+(defmacro do-grid-nodes ((node-sym worldstate) &body b)
+  (let ((key-sym (gensym))
+        (value-sym (gensym)))
+    `(maphash
+       (lambda (,key-sym ,value-sym)
+         (declare (ignore ,value-sym))
+         (when (eql (type-of ,key-sym) 'node)
+           (let ((,node-sym ,key-sym))
+             ,@b)))
+       (slot-value ,worldstate 'grid))))
+
 (defmacro get-grid-elt (worldstate designator)
   `(gethash ,designator (slot-value ,worldstate 'grid)))
 
