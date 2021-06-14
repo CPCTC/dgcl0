@@ -3,8 +3,6 @@
 
 (in-package :dgcl0)
 
-(provide :dgcl0-driver)
-
 (defpackage :driver
   (:export
     neighbor    ;; Get lambdas of connected nodes.

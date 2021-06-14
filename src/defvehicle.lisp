@@ -2,8 +2,6 @@
 
 (in-package :dgcl0)
 
-(provide :dgcl0-defvehicle)
-
 (defgeneric canonical-dir (dir))
 
 (defmethod canonical-dir ((dir integer))
