@@ -1,5 +1,5 @@
-;;;; Containes the public interface for calls to the dgcl0 driver from loaded vehicles.
-;;;; Non-trivial driver calls should call functions from vehicle-logic.lisp.
+;;;; Contains the public interface for calls to the dgcl0 driver from loaded vehicles.
+;;;; Implementation in vehicle-logic.lisp.
 
 (in-package :dgcl0)
 
