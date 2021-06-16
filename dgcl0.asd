@@ -7,14 +7,14 @@
           ))
      (:file "main"
         :depends-on (
-          "package"
+          "packages"
           "run"
           "env"
           ;; defvehicle at runtime
           ))
      (:file "run"
         :depends-on (
-          "package"
+          "packages"
           "vehicle"
           "env"
           ;"env-logic"
@@ -22,23 +22,23 @@
           ))
      (:file "defvehicle"
         :depends-on (
-          "package"
+          "packages"
           "env"
           "vehicle"
           ))
      (:file "env"
         :depends-on (
-          "package"
+          "packages"
           "vehicle"
           ))
      (:file "draw"
         :depends-on (
-          "package"
+          "packages"
           "vehicle"
           "env"
           ))
      (:file "vehicle"
         :depends-on (
-          "package"
+          "packages"
           ))
      ))))
