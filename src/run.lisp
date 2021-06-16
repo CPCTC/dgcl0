@@ -1,6 +1,6 @@
 ;;;; Highest-level function for the simulation proper.
 
-(in-package :dgcl0)
+(in-package :dgcl0-int)
 
 (defun step-vehicle (*worldstate* *this-vehicle*)
   (declare (special *worldstate* *this-vehicle*))

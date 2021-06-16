@@ -1,7 +1,7 @@
 ;;;; Provides the env class, and is responsible
 ;;;; for low-level manipulations of *worldstate*.
 
-(in-package :dgcl0)
+(in-package :dgcl0-int)
 
 ;;; Env class ;;;
 

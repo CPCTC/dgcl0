@@ -3,7 +3,7 @@
 ;;;; the vehicle data structure should go here, logic should go
 ;;;; in vehicle-logic.lisp.
 
-(in-package :dgcl0)
+(in-package :dgcl0-int)
 
 ;;; Vehicle class ;;;
 

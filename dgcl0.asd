@@ -2,7 +2,7 @@
   :components
   ((:module "src"
     :components
-    ((:file "package"
+    ((:file "packages"
         :depends-on (
           ))
      (:file "main"
@@ -36,10 +36,6 @@
           "package"
           "vehicle"
           "env"
-          ))
-     (:file "driver"
-        :depends-on (
-          "package"
           ))
      (:file "vehicle"
         :depends-on (

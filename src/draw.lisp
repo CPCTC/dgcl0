@@ -1,4 +1,4 @@
-(in-package :dgcl0)
+(in-package :dgcl0-int)
 
 (defun find-size (worldstate)
   (let (poses)

@@ -1,6 +1,6 @@
 ;;;; Defines defvehicle, the DSL for vehicle creation.
 
-(in-package :dgcl0)
+(in-package :dgcl0-int)
 
 (defgeneric canonical-dir (dir))
 
