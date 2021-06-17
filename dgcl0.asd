@@ -37,6 +37,12 @@
           "vehicle"
           "env"
           ))
+     (:file "vehicle-logic"
+        :depends-on (
+          "packages"
+          "env"
+          "vehicle"
+          ))
      (:file "vehicle"
         :depends-on (
           "packages"

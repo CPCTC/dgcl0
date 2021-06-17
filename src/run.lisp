@@ -4,10 +4,12 @@
 
 (defun step-vehicle (*worldstate* *this-vehicle*)
   (declare (special *worldstate* *this-vehicle*))
-  (handler-case
-    (funcall (node-lambda (top *this-vehicle*)))
-    (condition ()
-      (rm-vehicle *worldstate* *this-vehicle*))))
+  (let ((*this-node* (top *this-vehicle*)))
+    (declare (special *this-node*))
+    (handler-case
+      (funcall (node-lambda *this-node*))
+      (condition ()
+        (rm-vehicle *worldstate* *this-vehicle*)))))
 
 (defun timestep (worldstate)
   (step-env worldstate)
