@@ -64,6 +64,21 @@
     (declare (ignore dir))
     (rm-grid-elt worldstate node)))
 
+(defun grid-size (worldstate)
+  (let (poses)
+    (do-grid (node pos worldstate)
+      (declare (ignore node))
+      (push pos poses))
+    (let* ((xs
+             (mapcar #'second poses))
+           (ys
+             (mapcar #'first poses))
+           (min-pos
+             (list (apply #'min ys) (apply #'min xs)))
+           (max-pos
+             (list (apply #'max ys) (apply #'max xs))))
+      (values min-pos max-pos))))
+
 (defun add-vehicle (worldstate v)
   (push v (slot-value worldstate 'vehicles))
   (add-vehicle-nodes worldstate v))

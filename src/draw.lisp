@@ -1,23 +1,10 @@
 (in-package :dgcl0-int)
 
 (defun find-size (worldstate)
-  (let (poses)
-    (do-grid (node pos worldstate)
-      (declare (ignore node))
-      (push pos poses))
-    (let* ((xs
-             (mapcar #'second poses))
-           (ys
-             (mapcar #'first poses))
-           (min-pos
-             (list (apply #'min ys) (apply #'min xs)))
-           (max-pos
-             (list (apply #'max ys) (apply #'max xs)))
-           (size
-             (mapcar #'+ (mapcar #'- max-pos min-pos) '(1 1)))
-           (origin
-             (mapcar #'- min-pos)))
-      (values size origin))))
+  (multiple-value-bind (min-pos max-pos) (grid-size worldstate)
+    (values
+      (mapcar #'+ (mapcar #'- max-pos min-pos) '(1 1))
+      (mapcar #'- min-pos))))
 
 (defun plot (field width pos char)
   (setf
