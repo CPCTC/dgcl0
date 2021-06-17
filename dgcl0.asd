@@ -25,6 +25,11 @@
           "packages"
           "env"
           "vehicle"
+          "directions"
+          ))
+     (:file "directions"
+        :depends-on (
+          "packages"
           ))
      (:file "env"
         :depends-on (
@@ -42,6 +47,7 @@
           "packages"
           "env"
           "vehicle"
+          "directions"
           ))
      (:file "vehicle"
         :depends-on (
