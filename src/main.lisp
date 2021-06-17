@@ -4,7 +4,7 @@
 ;;;; (run *worldstate*). This function is mostly
 ;;;; for creating standalone binaries.
 
-(in-package :dgcl0)
+(in-package :dgcl0-int)
 
 (defun main (argv)
   (dolist (file (cdr argv))     ; assuming posix-style argv

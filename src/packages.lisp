@@ -3,97 +3,99 @@
 ;;; Internal Package ;;;
 
 (defpackage :dgcl0-int
-  (:use :cl))
+  (:use :cl)
+  (:intern
+    :main
+    :run
+    :defvehicle))
 
 ;;; Package 'dgcl0' ;;;
 ;;; Contains the API for controlling and running the game.
-(let ((ext-syms (list
+(macrolet ((def-dgcl0-package (syms)
+             `(defpackage :dgcl0
+                (:import-from :dgcl0-int ,@syms)
+                (:export ,@syms))))
+  (def-dgcl0-package (
+    :main       ;; Load vehicle files, then start the game.
+    ;; Syntax:
+    ;; main argv
+    ;; argv::= (dgcl0 vehicle-file+)
+    ;;
+    ;; Arguments and Values:
+    ;; vehicle-file---a pathname designator.
+    ;;
+    ;; Description:
+    ;; main loads each vehicle file designated by
+    ;; vehicle-file, then invokes run. Vehicle files
+    ;; are assumed to be lisp source code which contains
+    ;; at least one defvehicle form.
 
-        :main       ;; Load vehicle files, then start the game.
-        ;; Syntax:
-        ;; main argv
-        ;; argv::= (dgcl0 vehicle-file+)
-        ;;
-        ;; Arguments and Values:
-        ;; vehicle-file---a pathname designator.
-        ;;
-        ;; Description:
-        ;; main loads each vehicle file designated by
-        ;; vehicle-file, then invokes run. Vehicle files
-        ;; are assumed to be lisp source code which contains
-        ;; at least one defvehicle form.
+    :run        ;; Start the game.
+    ;; Syntax:
+    ;; run &optional worldstate
+    ;;
+    ;; Arguments and Values:
+    ;; worldstate---a worldstate object.
+    ;;
+    ;; Description:
+    ;; run simulates the worldstate worldstate.
+    ;; After each intermediate simulation step,
+    ;; the worldstate is displayed, and
+    ;; execution is paused until the enter key
+    ;; is pressed.
 
-        :run        ;; Start the game.
-        ;; Syntax:
-        ;; run &optional worldstate
-        ;;
-        ;; Arguments and Values:
-        ;; worldstate---a worldstate object.
-        ;;
-        ;; Description:
-        ;; run simulates the worldstate worldstate.
-        ;; After each intermediate simulation step,
-        ;; the worldstate is displayed, and
-        ;; execution is paused until the enter key
-        ;; is pressed.
+    :defvehicle ;; Create a vehicle and add it to the worldstate.
+    ;; Syntax:
+    ;; defvehicle name &key nodes
+    ;; nodes::= (node-spec*)
+    ;; node-spec::= (lambda pos no-connect-side*)
+    ;; pos::= (y x)
+    ;;
+    ;; Arguments and Values:
+    ;; lambda---a form
+    ;; no-connect-side---a direction specifier, as described below; not evaluated
+    ;; y---an integer
+    ;; x---an integer
+    ;;
+    ;; Description:
+    ;; defvehicle creates a new vehicle and adds it to the default worldstate.
+    ;;
+    ;; The vehicle is constructed by first creating a node from each node-spec.
+    ;; Each node contains a function object obtained by evaluating the lambda
+    ;; of the node specifier.
+    ;;
+    ;; Next, every pair of nodes are connected if the following criteria are met:
+    ;;   - The pos's of the corresponding node-specs represent points on a
+    ;;     cartesian grid that are adjacent to each other in the cardinal directions.
+    ;;   - Neither node's corresponding node-spec specifies a no-connect-side that
+    ;;     designates the pos of the other node's node-spec.
+    ;;
+    ;; A direction specifier is an integer or a case-insensitive string designator.
+    ;; It corresponds with a direction vector in the manner given in the following table.
+    ;;
+    ;;     Direction Specifier | Direction Vector
+    ;;     =================== | ================
+    ;;     0                   | ( 0  1 )
+    ;;     1                   | (-1  0 )
+    ;;     2                   | ( 0 -1 )
+    ;;     3                   | ( 1  0 )
+    ;;     "right"             | ( 0  1 )
+    ;;     "up"                | (-1  0 )
+    ;;     "left"              | ( 0 -1 )
+    ;;     "down"              | ( 1  0 )
+    ;;     "east"              | ( 0  1 )
+    ;;     "north"             | (-1  0 )
+    ;;     "west"              | ( 0 -1 )
+    ;;     "south"             | ( 1  0 )
+    ;;
+    ;; A direction designator designates the pos p+v, where p is the node-spec's
+    ;; pos, and v is the direction designator's corresponding direction vector.
+    ;;
+    ;; After all nodes are connected, the full vehicle they constitute is placed into
+    ;; the worldstate. The node whose node-spec came first in nodes is designated as
+    ;; the vehicle's top-level node.
 
-        :defvehicle ;; Create a vehicle and add it to the worldstate.
-        ;; Syntax:
-        ;; defvehicle name &key nodes
-        ;; nodes::= (node-spec*)
-        ;; node-spec::= (lambda pos no-connect-side*)
-        ;; pos::= (y x)
-        ;;
-        ;; Arguments and Values:
-        ;; lambda---a form
-        ;; no-connect-side---a direction specifier, as described below; not evaluated
-        ;; y---an integer
-        ;; x---an integer
-        ;;
-        ;; Description:
-        ;; defvehicle creates a new vehicle and adds it to the default worldstate.
-        ;;
-        ;; The vehicle is constructed by first creating a node from each node-spec.
-        ;; Each node contains a function object obtained by evaluating the lambda
-        ;; of the node specifier.
-        ;;
-        ;; Next, every pair of nodes are connected if the following criteria are met:
-        ;;   - The pos's of the corresponding node-specs represent points on a
-        ;;     cartesian grid that are adjacent to each other in the cardinal directions.
-        ;;   - Neither node's corresponding node-spec specifies a no-connect-side that
-        ;;     designates the pos of the other node's node-spec.
-        ;;
-        ;; A direction specifier is an integer or a case-insensitive string designator.
-        ;; It corresponds with a direction vector in the manner given in the following table.
-        ;;
-        ;;     Direction Specifier | Direction Vector
-        ;;     =================== | ================
-        ;;     0                   | ( 0  1 )
-        ;;     1                   | (-1  0 )
-        ;;     2                   | ( 0 -1 )
-        ;;     3                   | ( 1  0 )
-        ;;     "right"             | ( 0  1 )
-        ;;     "up"                | (-1  0 )
-        ;;     "left"              | ( 0 -1 )
-        ;;     "down"              | ( 1  0 )
-        ;;     "east"              | ( 0  1 )
-        ;;     "north"             | (-1  0 )
-        ;;     "west"              | ( 0 -1 )
-        ;;     "south"             | ( 1  0 )
-        ;;
-        ;; A direction designator designates the pos p+v, where p is the node-spec's
-        ;; pos, and v is the direction designator's corresponding direction vector.
-        ;;
-        ;; After all nodes are connected, the full vehicle they constitute is placed into
-        ;; the worldstate. The node whose node-spec came first in nodes is designated as
-        ;; the vehicle's top-level node.
-
-        )))
-  (macrolet ((def-dgcl0-package (syms)
-               `(defpackage :dgcl0
-                  (:import-from :dgcl0-int ,@syms)
-                  (:export ,@syms))))
-    (def-dgcl0-package ext-syms)))
+    )))
 
 ;;; Package 'driver' ;;;
 ;;; Contains the public interface for calls to the dgcl0 driver from loaded vehicles.
