@@ -14,7 +14,7 @@
   (do-vehicle (v worldstate)
     (step-vehicle worldstate v)))
 
-(defun run (&optional (worldstate *worldstate*))
+(defun run (&optional (worldstate *default-worldstate*))
   (do () ((done-p worldstate))
     (timestep worldstate)
     (draw worldstate)

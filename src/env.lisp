@@ -1,5 +1,5 @@
 ;;;; Provides the env class, and is responsible
-;;;; for low-level manipulations of *worldstate*.
+;;;; for low-level manipulations of *default-worldstate*.
 
 (in-package :dgcl0-int)
 
@@ -82,7 +82,7 @@
   ;; but for now....
   '(0 0))
 
-;;; *Worldstate* var ;;;
+;;; *Default-Worldstate* var ;;;
 
-(defvar *worldstate*
+(defvar *default-worldstate*
   (make-instance 'env))
