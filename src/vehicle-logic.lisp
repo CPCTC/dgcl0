@@ -44,3 +44,11 @@
           (when result
             (return (node-char result))))
         ))))
+
+(defun dgcl0-driver:shoot (y x)
+  (declare (special *worldstate* *this-vehicle* *this-node*))
+  (let ((pos
+          (get-grid-elt *worldstate* *this-node*))
+        (vel
+          (list y x)))
+    (add-bullet *worldstate* (mapcar #'+ pos vel) vel)))
