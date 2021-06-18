@@ -28,4 +28,6 @@
             (make-array (apply #'* size) :initial-element #\Space)))
       (do-grid (node pos worldstate)
         (plot field (second size) (mapcar #'+ pos origin) (node-char node)))
+      (dolist (b (bullets worldstate))
+        (plot field (second size) (mapcar #'+ (pos b) origin) #\*))
       (display field size))))

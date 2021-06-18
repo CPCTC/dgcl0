@@ -1,7 +1,23 @@
-;;;; Provides the env class, and is responsible
+;;;; Provides the env class and it's subclasses, and is responsible
 ;;;; for low-level manipulations of *default-worldstate*.
 
 (in-package :dgcl0-int)
+
+;;; Bullet class ;;;
+
+(defclass bullet nil
+  ((pos
+     :accessor pos
+     :initarg :pos)
+   (vel
+     :accessor vel
+     :initarg :vel)
+   (counter
+     :accessor counter
+     :initarg :counter)))
+
+(defmacro make-bullet (pos vel)
+  `(make-instance 'bullet :pos ,pos :vel ,vel :counter 0))
 
 ;;; Env class ;;;
 
@@ -12,7 +28,10 @@
    ;; global-pos -> node
    ;; node -> global-pos
    (grid
-     :initform (make-hash-table :test #'equal))))
+     :initform (make-hash-table :test #'equal))
+   (bullets
+     :accessor bullets
+     :initform nil)))
   ;; more coming soon...
 
 (defmacro do-vehicle ((v-sym worldstate) &body b)
@@ -64,11 +83,16 @@
     (declare (ignore dir))
     (rm-grid-elt worldstate node)))
 
+(defmacro add-bullet (worldstate pos vel)
+  `(push (make-bullet ,pos ,vel) (slot-value ,worldstate 'bullets)))
+
 (defun world-size (worldstate)
   (let (poses)
     (do-grid (node pos worldstate)
       (declare (ignore node))
       (push pos poses))
+    (dolist (b (bullets worldstate))
+      (push (pos b) poses))
     (let* ((xs
              (mapcar #'second poses))
            (ys
