@@ -84,9 +84,9 @@
   (add-vehicle-nodes worldstate v))
   ;; also move on in the list checked by next-vehicle-pos
 
-(defmacro rm-vehicle (worldstate vehicle)
-  `(let ((worldstate ,worldstate))
-     (setf (slot-value worldstate 'vehicle) (delete ,vehicle (slot-value worldstate 'vehicle)))))
+(defun rm-vehicle (worldstate vehicle)
+  (rm-vehicle-nodes worldstate vehicle)
+  (setf (slot-value worldstate 'vehicles) (delete vehicle (slot-value worldstate 'vehicles))))
 
 (defmacro done-p (worldstate)
   `(= (length (slot-value ,worldstate 'vehicles)) 1))
