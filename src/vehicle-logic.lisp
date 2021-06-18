@@ -46,6 +46,7 @@
         ))))
 
 (defun dgcl0-driver:shoot (y x)
+  ;(assert-node-type *this-node* 'shoot)
   (declare (special *worldstate* *this-vehicle* *this-node*))
   (let ((pos
           (get-grid-elt *worldstate* *this-node*))
@@ -54,12 +55,14 @@
     (add-bullet *worldstate* (mapcar #'+ pos vel) vel)))
 
 (defun dgcl0-driver:translate (dir)
+  ;(assert-node-type *this-node* 'translate)
   (declare (special *worldstate* *this-vehicle* *this-node*))
   (rm-vehicle-nodes *worldstate* *this-vehicle*)
   (setf (pos *this-vehicle*) (move-dir (pos *this-vehicle*) (canonical-dir dir)))
   (add-vehicle-nodes *worldstate* *this-vehicle*))
 
 (defun dgcl0-driver:rotate (dir)
+  ;(assert-node-type *this-node* 'rotate)
   (declare (special *worldstate* *this-vehicle* *this-node*))
   (let* ((rotation
           (mod (1- (canonical-dir dir)) 4))
