@@ -64,7 +64,7 @@
     (declare (ignore dir))
     (rm-grid-elt worldstate node)))
 
-(defun grid-size (worldstate)
+(defun world-size (worldstate)
   (let (poses)
     (do-grid (node pos worldstate)
       (declare (ignore node))

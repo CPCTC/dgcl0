@@ -31,7 +31,7 @@
       (progn
         ;; move to new location
         (setf pos (mapcar #'+ pos vec))
-        (multiple-value-bind (min-coord max-coord) (grid-size *worldstate*)
+        (multiple-value-bind (min-coord max-coord) (world-size *worldstate*)
           (when
             (not    ;; when i'm outside of the grid area
               (and

@@ -1,7 +1,7 @@
 (in-package :dgcl0-int)
 
 (defun find-size (worldstate)
-  (multiple-value-bind (min-pos max-pos) (grid-size worldstate)
+  (multiple-value-bind (min-pos max-pos) (world-size worldstate)
     (values
       (mapcar #'+ (mapcar #'- max-pos min-pos) '(1 1))
       (mapcar #'- min-pos))))
