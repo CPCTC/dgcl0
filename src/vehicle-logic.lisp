@@ -58,3 +58,20 @@
   (rm-vehicle-nodes *worldstate* *this-vehicle*)
   (setf (pos *this-vehicle*) (move-dir (pos *this-vehicle*) (canonical-dir dir)))
   (add-vehicle-nodes *worldstate* *this-vehicle*))
+
+(defun dgcl0-driver:rotate (dir)
+  (declare (special *worldstate* *this-vehicle* *this-node*))
+  (let* ((rotation
+          (mod (1- (canonical-dir dir)) 4))
+        (pivot-pos
+          (get-grid-elt *worldstate* *this-node*))
+        (neg-offset
+          (mapcar #'- (pos *this-vehicle*) pivot-pos)))
+    (rm-vehicle-nodes *worldstate* *this-vehicle*)
+    (setf (rotation *this-vehicle*)
+      (mod (+ (rotation *this-vehicle*) rotation) 4))
+    (setf (pos *this-vehicle*)
+      (mapcar #'+
+        pivot-pos
+        (rotate neg-offset rotation)))
+    (add-vehicle-nodes *worldstate* *this-vehicle*)))
