@@ -52,3 +52,9 @@
         (vel
           (list y x)))
     (add-bullet *worldstate* (mapcar #'+ pos vel) vel)))
+
+(defun dgcl0-driver:translate (dir)
+  (declare (special *worldstate* *this-vehicle* *this-node*))
+  (rm-vehicle-nodes *worldstate* *this-vehicle*)
+  (setf (pos *this-vehicle*) (move-dir (pos *this-vehicle*) (canonical-dir dir)))
+  (add-vehicle-nodes *worldstate* *this-vehicle*))
