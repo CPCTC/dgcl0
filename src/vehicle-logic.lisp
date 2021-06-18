@@ -21,3 +21,26 @@
         (lambda (&rest r)
           (declare (ignore r)))
         nil))))
+
+(defun dgcl0-driver:sense (y x)
+  (declare (special *worldstate* *this-vehicle* *this-node*))
+  ;(assert-node-type *this-node* 'sense)
+  (let ((pos (get-grid-elt *worldstate* *this-node*))
+        (vec (list y x)))
+    (loop
+      (progn
+        ;; move to new location
+        (setf pos (mapcar #'+ pos vec))
+        (multiple-value-bind (min-coord max-coord) (grid-size *worldstate*)
+          (when
+            (not    ;; when i'm outside of the grid area
+              (and
+                (apply #'<= (mapcar #'first (list min-coord pos max-coord)))
+                (apply #'<= (mapcar #'second (list min-coord pos max-coord)))))
+            (return #\Space)))
+        ;; check new location
+        (let ((result
+                (get-grid-elt *worldstate* pos)))
+          (when result
+            (return (node-char result))))
+        ))))
