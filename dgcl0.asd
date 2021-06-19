@@ -35,6 +35,7 @@
         :depends-on (
           "packages"
           "vehicle"
+          "directions"
           ))
      (:file "draw"
         :depends-on (
@@ -54,6 +55,7 @@
         :depends-on (
           "packages"
           "obj-types"
+          "directions"
           ))
      (:file "obj-types"
         :depends-on (

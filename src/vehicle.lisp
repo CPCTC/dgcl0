@@ -55,23 +55,6 @@
 
 ;;; Utility functions ;;;
 
-;; All of these use a coordinate system
-;; that ignores vehicle location and is
-;; relative to the top node.
-
-(defmacro opposite-dir (dir)
-  `(mod (+ ,dir 2) 4))
-
-(defun move-dir (coords dir)
-  (mapcar #'+ coords
-    (elt '((0 1) (-1 0) (0 -1) (1 0)) dir)))
-
-(defun dir->coords (directions)
-  (let ((coords '(0 0)))
-    (dolist (d directions)
-      (setf coords (move-dir coords d)))
-    coords))
-
 (defun douv-impl (fn node &optional (visited (make-hash-table :test #'equal)) reverse-dir)
   (let* ((coords
            (dir->coords reverse-dir))
@@ -89,12 +72,3 @@
       (lambda (,node-sym ,dir-sym)
         ,@b)
       ,top)))
-
-;; rotate *pos* *rotation* times
-;; counterclockwise around (0 0)
-(defun rotate (pos rotation)
-  (dotimes (i rotation pos)
-    (setf pos (list (- (second pos)) (first pos)))))
-
-(defun local->global-pos (vehicle pos)
-  (mapcar #'+ (pos vehicle) (rotate pos (rotation vehicle))))
