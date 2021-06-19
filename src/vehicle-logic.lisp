@@ -78,3 +78,9 @@
         pivot-pos
         (rotate neg-offset rotation)))
     (add-vehicle-nodes *worldstate* *this-vehicle*)))
+
+(defun dgcl0-driver:re-top ()
+  (declare (special *worldstate* *this-vehicle* *this-node*))
+  ;; it doesn't move, so don't mess with grid
+  (setf (top *this-vehicle*) *this-node*)
+  (setf (pos *this-vehicle*) (get-grid-elt *worldstate* *this-node*)))
