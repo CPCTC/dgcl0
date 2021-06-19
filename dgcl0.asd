@@ -41,6 +41,7 @@
           "packages"
           "vehicle"
           "env"
+          "obj-types"
           ))
      (:file "vehicle-logic"
         :depends-on (
@@ -50,6 +51,11 @@
           "directions"
           ))
      (:file "vehicle"
+        :depends-on (
+          "packages"
+          "obj-types"
+          ))
+     (:file "obj-types"
         :depends-on (
           "packages"
           ))

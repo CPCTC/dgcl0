@@ -34,13 +34,24 @@
      :initform (make-array 4 :initial-element nil))
    (char
      :accessor node-char
-     :initform #\.)))
+     :initform (obj-type-char 'unknown))
+   (type
+     :accessor node-type
+     :initform 'unknown)))
 
 (defmacro make-node (lambda)
   `(make-instance 'node :lambda ,lambda))
 
 (defmacro connection (node n)
   `(elt (slot-value ,node 'connections) ,n))
+
+(defun assert-node-type (node sym)
+  (if (eql (node-type node) 'unknown)
+    (progn
+      (setf (node-type node) sym)
+      (setf (node-char node) (obj-type-char sym)))
+    (unless (eql (node-type node) sym)
+      (error "Node of type ~a tried to ~a." (node-type node) sym))))
 
 ;;; Utility functions ;;;
 
