@@ -8,7 +8,8 @@
     (declare (special *this-node*))
     (handler-case
       (funcall (node-lambda *this-node*))
-      (condition ()
+      (condition (er)
+        (format t "~a~%~a fails!" er (name *this-vehicle*))
         (rm-vehicle *worldstate* *this-vehicle*)))))
 
 (defun timestep (worldstate)
