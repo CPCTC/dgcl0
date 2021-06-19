@@ -84,3 +84,23 @@
   ;; it doesn't move, so don't mess with grid
   (setf (top *this-vehicle*) *this-node*)
   (setf (pos *this-vehicle*) (get-grid-elt *worldstate* *this-node*)))
+
+(defun dgcl0-driver:connect (dir)
+  (declare (special *worldstate* *this-vehicle* *this-node*))
+  (assert-node-type *this-node* 'connect-disconnect)
+  (let ((node (get-grid-elt
+                *worldstate*
+                (move-dir
+                  (get-grid-elt *worldstate* *this-node*)
+                  (canonical-dir dir)))))
+    (unless node
+      (error "No node to connect to."))
+    (let (connected-p)
+      (douv (node dir node)
+        (declare (ignore dir))
+        (when (eq node *this-node*)
+          (setf connected-p t)))
+      (unless connected-p
+        (rm-vehicle-top *worldstate* *this-vehicle*)))
+    (setf (connection *this-node* (canonical-dir dir)) node)
+    (setf (connection node (opposite-dir (canonical-dir dir))) *this-node*)))

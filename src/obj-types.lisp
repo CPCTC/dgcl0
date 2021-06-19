@@ -10,6 +10,7 @@
     (setf (gethash 'shoot table) #\.)
     (setf (gethash 'translate table) #\.)
     (setf (gethash 'rotate table) #\.)
+    (setf (gethash 'connect-disconnect table) #\.)
 
     (setf (gethash 'bullet table) #\*)
 
