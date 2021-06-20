@@ -104,9 +104,12 @@
       (values min-pos max-pos))))
 
 (defun add-vehicle (worldstate v)
-  (push v (slot-value worldstate 'vehicles))
+  (add-vehicle-top worldstate v)
   (add-vehicle-nodes worldstate v))
   ;; also move on in the list checked by next-vehicle-pos
+
+(defmacro add-vehicle-top (worldstate vehicle)
+  `(push ,vehicle (slot-value ,worldstate 'vehicles)))
 
 (defun rm-vehicle-top (worldstate vehicle)
   (setf (slot-value worldstate 'vehicles) (delete vehicle (slot-value worldstate 'vehicles))))
