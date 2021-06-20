@@ -60,7 +60,7 @@
 
 (defun rotate-dir (facing dir)
   (mod
-    (+ facing (1- dir)) 4))
+    (+ facing dir) 4))
 
 (defun local->global-pos (vehicle pos)
   (mapcar #'+ (pos vehicle) (rotate pos (rotation vehicle))))
