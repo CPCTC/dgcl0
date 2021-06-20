@@ -102,12 +102,7 @@
                connection-dir))))
     (unless node
       (error "No node to connect to."))
-    (let (connected-p)
-      (douv (node dir node)
-        (declare (ignore dir))
-        (when (eq node *this-node*)
-          (setf connected-p t)))
-      (unless connected-p
-        (rm-vehicle-top *worldstate* *this-vehicle*)))
-    (setf (connection *this-node* (canonical-dir dir)) node)
+    (unless (connected-p node *this-node*)
+      (rm-vehicle-top *worldstate* *this-vehicle*))
+    (setf (connection *this-node* (canonical-dir dir)) node)  ;; local direction
     (setf (connection node (opposite-dir (canonical-dir dir))) *this-node*)))

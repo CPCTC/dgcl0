@@ -72,3 +72,10 @@
       (lambda (,node-sym ,dir-sym)
         ,@b)
       ,top)))
+
+(defun connected-p (a b)
+  (douv (node dir a)
+    (declare (ignore dir))
+    (when (eq node b)
+      (return-from connected-p t)))
+  nil)
