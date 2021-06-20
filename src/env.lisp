@@ -65,6 +65,12 @@
   (remhash (gethash designator (slot-value worldstate 'grid)) (slot-value worldstate 'grid))
   (remhash designator (slot-value worldstate 'grid)))
 
+(defmacro add-vehicle-top (worldstate vehicle)
+  `(push ,vehicle (slot-value ,worldstate 'vehicles)))
+
+(defun rm-vehicle-top (worldstate vehicle)
+  (setf (slot-value worldstate 'vehicles) (delete vehicle (slot-value worldstate 'vehicles))))
+
 (defun add-vehicle-nodes (worldstate vehicle)
   (let (added)
     (douv (node dir (top vehicle))
@@ -82,6 +88,15 @@
   (douv (node dir (top vehicle))
     (declare (ignore dir))
     (rm-grid-elt worldstate node)))
+
+(defun add-vehicle (worldstate v)
+  (add-vehicle-top worldstate v)
+  (add-vehicle-nodes worldstate v))
+  ;; also move on in the list checked by next-vehicle-pos
+
+(defun rm-vehicle (worldstate vehicle)
+  (rm-vehicle-nodes worldstate vehicle)
+  (rm-vehicle-top worldstate vehicle))
 
 (defmacro add-bullet (worldstate pos vel)
   `(push (make-bullet ,pos ,vel) (slot-value ,worldstate 'bullets)))
@@ -102,21 +117,6 @@
            (max-pos
              (list (apply #'max ys) (apply #'max xs))))
       (values min-pos max-pos))))
-
-(defun add-vehicle (worldstate v)
-  (add-vehicle-top worldstate v)
-  (add-vehicle-nodes worldstate v))
-  ;; also move on in the list checked by next-vehicle-pos
-
-(defmacro add-vehicle-top (worldstate vehicle)
-  `(push ,vehicle (slot-value ,worldstate 'vehicles)))
-
-(defun rm-vehicle-top (worldstate vehicle)
-  (setf (slot-value worldstate 'vehicles) (delete vehicle (slot-value worldstate 'vehicles))))
-
-(defun rm-vehicle (worldstate vehicle)
-  (rm-vehicle-nodes worldstate vehicle)
-  (rm-vehicle-top worldstate vehicle))
 
 (defmacro done-p (worldstate)
   `(= (length (slot-value ,worldstate 'vehicles)) 1))
