@@ -5,11 +5,7 @@
 
 (defun dgcl0-driver:neighbor (dir)
   (declare (special *worldstate* *this-vehicle* *this-node*))
-  (let ((node (get-grid-elt
-                *worldstate*
-                (move-dir
-                  (get-grid-elt *worldstate* *this-node*)
-                  (canonical-dir dir)))))
+  (let ((node (connection *this-node* (canonical-dir dir))))
     (if node
       (values
         (lambda (&rest args)
@@ -25,8 +21,10 @@
 (defun dgcl0-driver:sense (y x)
   (declare (special *worldstate* *this-vehicle* *this-node*))
   (assert-node-type *this-node* 'sense)
-  (let ((pos (get-grid-elt *worldstate* *this-node*))
-        (vec (list y x)))
+  (let ((pos
+          (get-grid-elt *worldstate* *this-node*))
+        (vec
+          (rotate (list y x) (rotation *this-vehicle*))))
     (loop
       (progn
         ;; move to new location
@@ -51,14 +49,20 @@
   (let ((pos
           (get-grid-elt *worldstate* *this-node*))
         (vel
-          (list y x)))
+          (rotate (list y x) (rotation *this-vehicle*))))
     (add-bullet *worldstate* (mapcar #'+ pos vel) vel)))
 
 (defun dgcl0-driver:translate (dir)
   (declare (special *worldstate* *this-vehicle* *this-node*))
   (assert-node-type *this-node* 'translate)
   (rm-vehicle-nodes *worldstate* *this-vehicle*)
-  (setf (pos *this-vehicle*) (move-dir (pos *this-vehicle*) (canonical-dir dir)))
+  (setf
+    (pos *this-vehicle*)
+    (move-dir
+      (pos *this-vehicle*)
+      (rotate-dir
+        (rotation *this-vehicle*)
+        (canonical-dir dir))))
   (add-vehicle-nodes *worldstate* *this-vehicle*))
 
 (defun dgcl0-driver:rotate (dir)
@@ -88,11 +92,14 @@
 (defun dgcl0-driver:connect (dir)
   (declare (special *worldstate* *this-vehicle* *this-node*))
   (assert-node-type *this-node* 'connect-disconnect)
-  (let ((node (get-grid-elt
-                *worldstate*
-                (move-dir
-                  (get-grid-elt *worldstate* *this-node*)
-                  (canonical-dir dir)))))
+  (let* ((connection-dir
+          (rotate-dir (rotation *this-vehicle*) (canonical-dir dir)))
+         (node
+           (get-grid-elt
+             *worldstate*
+             (move-dir
+               (get-grid-elt *worldstate* *this-node*)
+               connection-dir))))
     (unless node
       (error "No node to connect to."))
     (let (connected-p)
