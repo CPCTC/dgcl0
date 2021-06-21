@@ -106,3 +106,23 @@
       (rm-vehicle-top *worldstate* *this-vehicle*))
     (setf (connection *this-node* (canonical-dir dir)) node)  ;; local direction
     (setf (connection node (opposite-dir (canonical-dir dir))) *this-node*)))
+
+(defun dgcl0-driver:disconnect (dir)
+  (declare (special *worldstate* *this-vehicle* *this-node*))
+  (assert-node-type *this-node* 'connect-disconnect)
+  (let ((node
+          (connection *this-node* (canonical-dir dir))))
+    (unless node
+      (error "No node to disconnect from."))
+    (setf (connection *this-node* (canonical-dir dir)) nil)
+    (setf (connection node (opposite-dir (canonical-dir dir))) nil)
+    (unless (connected-p node *this-node*)
+      (let ((new-top-node
+              (if (connected-p *this-node* (top *this-vehicle*))
+                node
+                *this-node*)))
+        (add-vehicle-top *worldstate*
+          (make-vehicle
+            (concatenate 'string (name *this-vehicle*) " Part")
+            new-top-node
+            (get-grid-elt *worldstate* new-top-node)))))))
