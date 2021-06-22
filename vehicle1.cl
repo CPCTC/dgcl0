@@ -3,7 +3,7 @@
     (top
       (lambda ()
         (let ((sensor-results (funcall (dgcl0-driver:neighbor :west))))
-          (if sensor-results
+          (if (not (char= sensor-results #\Space))
             (funcall (dgcl0-driver:neighbor :north))))))
     (sensor
       (lambda ()
