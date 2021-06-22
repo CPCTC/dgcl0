@@ -15,6 +15,7 @@
      (:file "run"
         :depends-on (
           "packages"
+          "vehicle-logic"
           "vehicle"
           "env"
           ;"env-logic"

@@ -113,7 +113,7 @@
   (let ((node
           (connection *this-node* (canonical-dir dir))))
     (unless node
-      (error "No node to disconnect from."))
+      (return-from dgcl0-driver:disconnect nil))
     (setf (connection *this-node* (canonical-dir dir)) nil)
     (setf (connection node (opposite-dir (canonical-dir dir))) nil)
     (unless (connected-p node *this-node*)
@@ -126,3 +126,40 @@
             (concatenate 'string (name *this-vehicle*) " Part")
             new-top-node
             (get-grid-elt *worldstate* new-top-node)))))))
+
+;; This might be called from the bullet logic code, so don't
+;; assume the driver variables are present.
+(defun destroy-location (worldstate pos &optional vehicle)
+  (let ((node
+          (get-grid-elt worldstate pos)))
+    (unless node
+      (return-from destroy-location))
+    (unless vehicle
+      (setf vehicle
+        (vehicle-of worldstate node)))
+    (dotimes (i 4)
+      ;; hack: manually set up the driver variables
+      ;; so I can use dgcl0-driver:disconnect
+      (let ((*worldstate* worldstate)
+            (*this-vehicle* vehicle)
+            (*this-node* node))
+        (declare (special *worldstate* *this-vehicle* *this-node*))
+        (dgcl0-driver:disconnect i)))
+    (rm-grid-elt worldstate pos)
+    (do-vehicle (v worldstate)
+      (when (eq (top v) node)
+        (rm-vehicle-top worldstate v)
+        (return-from do-vehicle)))))
+
+(define-condition skip-turn () ())
+
+(defun dgcl0-driver:explode ()
+  (declare (special *worldstate* *this-vehicle* *this-node*))
+  (let ((this-pos (get-grid-elt *worldstate* *this-node*)))
+    (dotimes (i 4)
+      (destroy-location *worldstate*
+        (move-dir this-pos i))
+      (destroy-location *worldstate*
+        (move-dir (move-dir this-pos i) (mod (1+ i) 4))))
+    (destroy-location *worldstate* this-pos *this-vehicle*))
+  (error 'skip-turn))

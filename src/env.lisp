@@ -98,6 +98,13 @@
   (rm-vehicle-nodes worldstate vehicle)
   (rm-vehicle-top worldstate vehicle))
 
+(defun vehicle-of (worldstate node)
+  (do-vehicle (v worldstate)
+    (douv (v-node dir (top v))
+      (declare (ignore dir))
+      (when (eq v-node node)
+        (return-from vehicle-of v)))))
+
 (defmacro add-bullet (worldstate pos vel)
   `(push (make-bullet ,pos ,vel) (slot-value ,worldstate 'bullets)))
 
