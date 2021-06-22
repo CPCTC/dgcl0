@@ -30,4 +30,5 @@
         (plot field (second size) (mapcar #'+ pos origin) (node-char node)))
       (dolist (b (bullets worldstate))
         (plot field (second size) (mapcar #'+ (pos b) origin) (obj-type-char 'bullet)))
-      (display field size))))
+      (display field size)))
+  (format t "~%~%"))
