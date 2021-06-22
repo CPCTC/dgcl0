@@ -23,6 +23,8 @@
       (incf counter))))
 
 (defun draw (worldstate)
+  (when (empty-p worldstate)
+    (return-from draw))
   (multiple-value-bind (size origin) (find-size worldstate)
     (let ((field
             (make-array (apply #'* size) :initial-element #\Space)))

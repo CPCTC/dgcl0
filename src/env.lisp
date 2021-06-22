@@ -125,6 +125,11 @@
              (list (apply #'max ys) (apply #'max xs))))
       (values min-pos max-pos))))
 
+(defun empty-p (worldstate)
+  (and
+    (= 0 (hash-table-count (slot-value worldstate 'grid)))
+    (= 0 (length (bullets worldstate)))))
+
 (defmacro done-p (worldstate)
   `(= (length (slot-value ,worldstate 'vehicles)) 1))
 
