@@ -107,25 +107,28 @@
     (setf (connection *this-node* (canonical-dir dir)) node)  ;; local direction
     (setf (connection node (opposite-dir (canonical-dir dir))) *this-node*)))
 
+(defun disconnect (worldstate this-vehicle this-node dir)
+  (let ((node
+          (connection this-node (canonical-dir dir))))
+    (unless node
+      (return-from disconnect nil))
+    (setf (connection this-node (canonical-dir dir)) nil)
+    (setf (connection node (opposite-dir (canonical-dir dir))) nil)
+    (unless (connected-p node this-node)
+      (let ((new-top-node
+              (if (connected-p this-node (top this-vehicle))
+                node
+                this-node)))
+        (add-vehicle-top worldstate
+          (make-vehicle
+            (concatenate 'string (name this-vehicle) " Part")
+            new-top-node
+            (get-grid-elt worldstate new-top-node)))))))
+
 (defun dgcl0-driver:disconnect (dir)
   (declare (special *worldstate* *this-vehicle* *this-node*))
   (assert-node-type *this-node* 'connect-disconnect)
-  (let ((node
-          (connection *this-node* (canonical-dir dir))))
-    (unless node
-      (return-from dgcl0-driver:disconnect nil))
-    (setf (connection *this-node* (canonical-dir dir)) nil)
-    (setf (connection node (opposite-dir (canonical-dir dir))) nil)
-    (unless (connected-p node *this-node*)
-      (let ((new-top-node
-              (if (connected-p *this-node* (top *this-vehicle*))
-                node
-                *this-node*)))
-        (add-vehicle-top *worldstate*
-          (make-vehicle
-            (concatenate 'string (name *this-vehicle*) " Part")
-            new-top-node
-            (get-grid-elt *worldstate* new-top-node)))))))
+  (disconnect *worldstate* *this-vehicle* *this-node* dir))
 
 ;; This might be called from the bullet logic code, so don't
 ;; assume the driver variables are present.
@@ -138,13 +141,7 @@
       (setf vehicle
         (vehicle-of worldstate node)))
     (dotimes (i 4)
-      ;; hack: manually set up the driver variables
-      ;; so I can use dgcl0-driver:disconnect
-      (let ((*worldstate* worldstate)
-            (*this-vehicle* vehicle)
-            (*this-node* node))
-        (declare (special *worldstate* *this-vehicle* *this-node*))
-        (dgcl0-driver:disconnect i)))
+      (disconnect worldstate vehicle node i))
     (rm-grid-elt worldstate pos)
     (do-vehicle (v worldstate)
       (when (eq (top v) node)
