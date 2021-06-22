@@ -132,7 +132,7 @@
   ;; check the worldstate (the map) for a good place to put it.
 
   ;; but for now....
-  '(0 0))
+  (list (random 50) (random 50)))
 
 ;;; *Default-Worldstate* var ;;;
 
