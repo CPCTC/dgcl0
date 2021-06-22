@@ -18,7 +18,7 @@
           "vehicle-logic"
           "vehicle"
           "env"
-          ;"env-logic"
+          "env-logic"
           "draw"
           ))
      (:file "defvehicle"
@@ -31,6 +31,12 @@
      (:file "directions"
         :depends-on (
           "packages"
+          ))
+     (:file "env-logic"
+        :depends-on (
+          "packages"
+          "env"
+          "directions"
           ))
      (:file "env"
         :depends-on (
