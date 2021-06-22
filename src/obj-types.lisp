@@ -11,6 +11,7 @@
     (setf (gethash 'translate table) #\.)
     (setf (gethash 'rotate table) #\.)
     (setf (gethash 'connect-disconnect table) #\.)
+    (setf (gethash 'mimic table) #\.)
 
     (setf (gethash 'bullet table) #\*)
 

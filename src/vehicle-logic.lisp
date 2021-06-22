@@ -163,3 +163,8 @@
         (move-dir (move-dir this-pos i) (mod (1+ i) 4))))
     (destroy-location *worldstate* this-pos *this-vehicle*))
   (error 'skip-turn))
+
+(defun dgcl0-driver:mimic (c)
+  (declare (special *worldstate* *this-vehicle* *this-node*))
+  (assert-node-type *this-node* 'mimic)
+  (setf (node-char *this-node*) c))
