@@ -1,0 +1,9 @@
+#!/bin/sh
+
+# Like sbcl --script, but excludes --no-userinit and --no-sysinit. This should
+# get us quicklisp, if it was installed in the typical way.
+sbcl \
+	--noinform --disable-ldb --lose-on-corruption --end-runtime-options \
+	--disable-debugger \
+	--load \
+	make.cl
