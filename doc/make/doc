@@ -1,4 +1,4 @@
 #!/bin/bash
 
-makeinfo dgcl0.txi
-makeinfo dgcl0.txi --html
+makeinfo src/top.txi -o dgcl0.info
+makeinfo src/top.txi -o dgcl0 --html
