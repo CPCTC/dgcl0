@@ -1,0 +1,4 @@
+#!/bin/bash
+
+makeinfo dgcl0.txi
+makeinfo dgcl0.txi --html

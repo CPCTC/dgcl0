@@ -1,3 +1,4 @@
 #!/bin/sh
 
 rm -f dgcl0
+(cd doc && ./make/clean)

@@ -1,0 +1,4 @@
+#!/bin/bash
+
+rm -f dgcl0.info
+rm -rf dgcl0

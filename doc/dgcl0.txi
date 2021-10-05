@@ -1,0 +1,9 @@
+\input texinfo
+@settitle Dgcl0 Game Manual
+
+@node Top
+@top Dgcl0
+
+This is the manual for the game Dgcl0.
+
+@bye
