@@ -1,0 +1,14 @@
+@node Introduction
+@chapter Introduction
+
+@c Dgcl0 is a 2D programatic competitive vehicle-building game.
+
+Dgcl0 is a competitive vehicle-building game. In it, players build @dfn{vehicles}, which are autonomous entities that compete within the game world. When two or more vehicles are loaded into an arena, they fight each other until only one remains.
+
+Vehicles cannot be directly controlled during a fight. Instead, all thier AI must be programmed into them during construction. Fortunately, this all is very easy, because vehicles are made out of lisp code.
+
+Players build vehicles in thier favorite text editors, using the @code{defvehicle} macro provided by Dgcl0. The macro allows arbitrary procedures to be inserted into vehicles, but also defines the vehicle's physical structure. To learn how to write vehicles, @c @xref{Writing vehicles}.
+
+@c
+
+Dgcl0 is a 2D game, viewed from a top-down perspective. The game world consists of a cartesian grid.
