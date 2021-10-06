@@ -3,12 +3,14 @@
 
 @c Dgcl0 is a 2D programatic competitive vehicle-building game.
 
-Dgcl0 is a competitive vehicle-building game. In it, players build @dfn{vehicles}, which are autonomous entities that compete within the game world. When two or more vehicles are loaded into an arena, they fight each other until only one remains.
+Dgcl0 is a competitive vehicle-building game. In it, players create @dfn{vehicles}, which are autonomous entities that compete within the game world. When two or more vehicles are loaded into an arena, they fight each other until only one remains. Fights are spectated from a 2D, top-down perspective.
 
-Vehicles cannot be directly controlled during a fight. Instead, all thier AI must be programmed into them during construction. Fortunately, this all is very easy, because vehicles are made out of lisp code.
+You can pit your own vehicles against your friends' vehicles, and see who is the better designer. This is the core experience Dgcl0 aims to provide: It turns the engineering challenge of designing a robust machine into a competitive sport.
 
-Players build vehicles in thier favorite text editors, using the @code{defvehicle} macro provided by Dgcl0. The macro allows arbitrary procedures to be inserted into vehicles, but also defines the vehicle's physical structure. To learn how to write vehicles, @c @xref{Writing vehicles}.
+Vehicles do not have health bars. As vehicles take damage, thier individual components fail one by one. Well-designed vehicles use redundant systems to stay in the fight longer.
 
-@c
+Vehicles cannot be directly controlled during a fight; As mentioned above, they are autonomous. Instead, thier AI must be pre-programmed into them during construction. Fortunately, this all is very easy, because vehicles are made out of Lisp code.
 
-Dgcl0 is a 2D game, viewed from a top-down perspective. The game world consists of a cartesian grid.
+Players build vehicles in thier favorite text editors, using the @code{defvehicle} macro provided by Dgcl0. The macro allows arbitrary procedures to be inserted into vehicles, and also defines thier physical structure. To learn how to write vehicles, see Writing Vehicles.@c @xref{Writing vehicles}.
+
+Dgcl0 takes inspiration from many other games, including @emph{Besiege}, @emph{Robocraft}, @emph{Space Engineers}, and @emph{Galactic Junk League}. The game most similar to Dgcl0 is probably @emph{Carnage Heart}(1995). If you liked any of those games, but always wanted to write your creations in a real programming language, then Dgcl0 is the game for you.
