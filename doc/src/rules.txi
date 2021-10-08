@@ -1,0 +1,10 @@
+@node Game rules
+@chapter Game rules
+
+Once multiple vehicles are loaded into the game, Dglc0 simulates them until only one remains. This chapter discusses exactly how Dgcl0 performs this simulation.
+
+You can think of the algorithms used by Dgcl0 as the physical laws of the game world it simulates. The game world does not pretend to be anything like our own world, so it needs an entire chapter dedicated to explaning it.
+
+In other games, this information might be found in community-maintained wikis. You can think of this chapter as Dgcl0's wiki.
+
+@c some sub-nodes
