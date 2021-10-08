@@ -1,5 +1,6 @@
 \input texinfo
 @settitle Dgcl0 Game Manual
+@paragraphindent none
 
 @node Top
 @top Dgcl0
@@ -15,5 +16,6 @@ This is the manual for the game Dgcl0.
 @c @end menu
 
 @include intro.txi
+@include invocation.txi
 
 @bye

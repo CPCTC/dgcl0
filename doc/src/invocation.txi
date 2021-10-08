@@ -1,0 +1,16 @@
+@node Invocation
+@chapter Invocation
+
+When invoking Dgcl0, you must give it the pathnames of one or more Lisp files to load vehicles from. Dgcl0 compiles and loads each file, each of which presumably defines at least one vehicle. If after this process at least two vehicles in total have been defined, then Dgcl0 proceeds to simulate those vehicles.
+
+Here's an example invocation:
+
+@code{$ dgcl0 my-vehicle.lisp your-vehicle.lisp}
+
+In the typical case, each vehicle file will define only one vehicle. However, there's nothing stopping you from defining multiple vehicles per Lisp file. This is useful when defining a team of vehicles designed to work together. In situations like these, dgcl0 is invoked exactly the same way:
+
+@code{$ dgcl0 team-beans-extreme.lisp team-namibian-amoeba.lisp}
+
+You could even define every single vehicle within one Lisp file, like this:
+
+@code{$ dgcl0 mech-vs-giant-lizard.lisp}
