@@ -1,5 +1,5 @@
-@node Game rules
-@chapter Game rules
+@node Concepts
+@chapter Concepts
 
 Once multiple vehicles are loaded into the game, Dglc0 simulates them until only one remains. This chapter discusses exactly how Dgcl0 performs this simulation.
 

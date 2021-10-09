@@ -10,13 +10,13 @@ This is the manual for the game Dgcl0.
 @c @menu
 * Introduction::		What is Dgcl0 about?
 * Invocation::			How to start a match.
-* Game rules::			Mechanics and interactions within the game world.
+* Concepts::			All about the game world.
 * Writing vehicles::		Creating new vehicles in Lisp.
 * Drcall API reference::	How vehicles interact with Dgcl0.
 @c @end menu
 
 @include intro.txi
 @include invocation.txi
-@include rules.txi
+@include concepts.txi
 
 @bye
