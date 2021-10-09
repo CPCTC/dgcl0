@@ -18,5 +18,6 @@ This is the manual for the game Dgcl0.
 @include intro.txi
 @include invocation.txi
 @include concepts.txi
+@include vehicles.txi
 
 @bye

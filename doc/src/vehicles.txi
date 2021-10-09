@@ -1,0 +1,4 @@
+@node Writing Vehicles
+@chapter Writing Vehicles
+
+This chapter describes the @code{defvehicle} macro, which is used to create vehicles.
