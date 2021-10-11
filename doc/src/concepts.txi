@@ -8,3 +8,21 @@ You can think of the algorithms used by Dgcl0 as the physical laws of the game w
 In other games, this information might be found in community-maintained wikis. You can think of this chapter as Dgcl0's wiki.
 
 @c some sub-nodes
+
+@c here's the actual information, disorganized:
+
+The game takes place on an infinite 2-dimentional grid with integer-pair coordinates.
+
+Lisp function objects can occupy positions on the grid. A function object associated with a grid coordinate is called a @dfn{node}.
+
+Nodes can be @dfn{connected} to other nodes. Connected nodes must be adjacent. Not every pair of adjacent nodes are connected. A collection of one or more interconnected nodes is called a @dfn{vehicle}.
+
+In every vehicle, exactly one node is said to be the @dfn{top-level node}. Top-level nodes are special nodes involved in simulating the vehicle. The next section discusses them in depth.
+
+Once every step of the simulation, Dgcl0 passes control to every vehicle by calling every vehicle's top-level node.
+
+Once control has entered a vehicle, the vehicle will probably want to take an action within the game world. This is done through Dgcl0's driver call api. "Driver call" is usually abbreviated to @dfn{drcall}. See Drcalls for a list of actions nodes can take.
+
+When a node invokes a drcall, Dgcl0 magically knows the position of the calling node. Dgcl0 remembers which node calls which drcall. If a node ever tries to call a different drcall, then the node is destroyed. There are some exceptions to this rule, like the @code{neighbor} function.
+
+If control is ever passed from node to node via regular function calls, Dgcl0 cannot know which node calls which drcall. Instead, vehicle designers should pass control from node to node with the @code{neighbor} drcall. This drcall is one of the exceptions to the destruction rule above.
