@@ -11,7 +11,39 @@ In other games, this information might be found in community-maintained wikis. Y
 
 @c here's the actual information, disorganized:
 
-The game takes place on an infinite 2-dimentional grid with integer-pair coordinates.
+==
+
+This section describes the coordinate system used in Dgcl0.
+
+The game takes place on an infinite 2-dimentional grid with integer-pair coordinates. Here's a picture:
+
+@verbatim
+ . . .-3 . . .
+ . . .-2 . . .
+ . . .-1 . . .
+-3-2-1 0 1 2 3
+ . . . 1 . . .
+ . . . 2 . . .
+ . . . 3 . . .
+@end verbatim
+
+Notice that the larger y-coordinates are towards the bottom of the page. Coordinates in Dgcl0 take the form of (y, x).
+
+For example, in the picture below, the asterisk is at position (2, 1), and the plus sign is at position (-3, -2). The dots are ommitted for visibility.
+
+@verbatim
+      -3
+ +    -2
+      -1
+-3-2-1 0 1 2 3
+       1
+       2 *
+       3
+@end verbatim
+
+Too sum up this section: Dgcl0 takes place on a 2D Cartesian grid.
+
+==
 
 Lisp function objects can occupy positions on the grid. A function object associated with a grid coordinate is called a @dfn{node}.
 
